@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { PrismaService } from './prisma/prisma.service'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -10,6 +11,12 @@ async function bootstrap() {
 
     const prismaService = app.get(PrismaService)
     prismaService.enableShutdownHooks(app)
+
+    const config = new DocumentBuilder()
+        .setTitle('sigma-intelligence-community-server')
+        .build()
+    const document = SwaggerModule.createDocument(app, config)
+    SwaggerModule.setup('swagger', app, document)
 
     await app.listen(process.env.PORT ?? 3000)
 }
