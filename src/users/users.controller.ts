@@ -4,20 +4,25 @@ import {
     Param,
     Delete,
     NotFoundException,
+    Patch,
+    Post,
+    Body,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { ApiTags } from '@nestjs/swagger'
 import { UserDto } from './dto/user.dto'
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    //   @Post()
-    //   create(@Body() createUserDto: CreateUserDto) {
-    //     return this.usersService.create(createUserDto);
-    //   }
+    @Post()
+    async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+        return this.usersService.create(createUserDto)
+    }
 
     @Get()
     async findAll(): Promise<Array<UserDto>> {
@@ -34,10 +39,10 @@ export class UsersController {
         return UserDto.fromEntity(user)
     }
 
-    //   @Patch(':id')
-    //   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    //     return this.usersService.update(+id, updateUserDto);
-    //   }
+    @Patch(':id')
+    async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
+        return this.usersService.update(+id, updateUserDto)
+    }
 
     @Delete(':id')
     async remove(@Param('id') id: string): Promise<UserDto> {
