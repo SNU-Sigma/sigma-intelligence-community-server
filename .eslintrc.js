@@ -17,4 +17,7 @@ module.exports = {
         jest: true,
     },
     ignorePatterns: ['/*', '!/src'],
+    rules: {
+        eqeqeq: ['warn', 'always'],
+    },
 }
