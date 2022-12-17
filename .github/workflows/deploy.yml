@@ -1,0 +1,23 @@
+name: Heroku Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v2
+
+      - name: 🔧 Heroku Deploy
+        uses: AkhileshNS/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: 'sigma-intelligence-community'
+          heroku_email: 'record.snusigma@gmail.com'
+          healthcheck: 'https://sigma-intelligence-community.herokuapp.com/health'
+          delay: 10
+          rollbackonhealthcheckfailed: true
