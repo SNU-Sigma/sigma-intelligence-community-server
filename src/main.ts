@@ -1,10 +1,9 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { PrismaService } from './prisma/prisma.service'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { PrismaClientExceptionFilter } from 'nestjs-prisma'
+import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -15,7 +14,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
 
     const prismaService = app.get(PrismaService)
-    prismaService.enableShutdownHooks(app)
+    await prismaService.enableShutdownHooks(app)
 
     const { httpAdapter } = app.get(HttpAdapterHost)
     app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
