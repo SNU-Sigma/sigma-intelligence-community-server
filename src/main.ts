@@ -10,7 +10,10 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule)
 
     // FIXME: 추후 localhost와 실제 배포된 웹에서만 동작하도록 수정 필요
-    app.enableCors()
+    app.enableCors({
+        origin: true,
+        credentials: true,
+    })
 
     app.use(cookieParser())
 
