@@ -4,12 +4,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
+import * as cookieParser from 'cookie-parser'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
 
     // FIXME: 추후 localhost와 실제 배포된 웹에서만 동작하도록 수정 필요
     app.enableCors()
+
+    app.use(cookieParser())
 
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
 
