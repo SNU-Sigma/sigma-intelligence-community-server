@@ -29,7 +29,7 @@ export class AuthController {
         const { accessToken } = await this.authService.login(
             request.user as any,
         )
-        response.cookie('jwt', accessToken, {
+        response.cookie(AuthConstants.cookieKey, accessToken, {
             httpOnly: true,
             maxAge: AuthConstants.accessTokenExpiresIn,
         })
