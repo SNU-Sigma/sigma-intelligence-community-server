@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
+import { User } from '@prisma/client'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
 import { AuthConstants } from '../auth.constants'
+import { AuthService } from '../auth.service'
 import { JWTPayload } from '../models/JWTPayload'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(private configService: ConfigService) {
+    constructor(
+        private configService: ConfigService,
+        private authService: AuthService,
+    ) {
         super({
             jwtFromRequest: (req: Request) => {
                 return req.cookies[AuthConstants.cookieKey]
@@ -19,16 +24,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: JWTPayload): Promise<User> {
-        return {
-            id: payload.id,
-            email: payload.email,
-            password: 'fake',
+        const user = await this.authService.findUser(payload.id)
+        if (user === null) {
+            throw new UnauthorizedException()
         }
+        return user
     }
-}
-
-type User = {
-    id: number
-    email: string
-    password: string
 }

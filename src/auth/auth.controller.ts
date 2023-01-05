@@ -1,34 +1,33 @@
 import {
     Controller,
     Post,
-    UseGuards,
-    Req,
     Res,
     UnauthorizedException,
+    Body,
 } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
 import { AuthService } from './auth.service'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
 import { AuthConstants } from './auth.constants'
+import { LoginCredentialsDto } from './dto/login-credentials.dto'
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @UseGuards(AuthGuard('local'))
     @Post('login')
     async login(
-        @Req() request: Request,
+        @Body() loginCredentialsDto: LoginCredentialsDto,
         @Res({ passthrough: true }) response: Response,
     ): Promise<void> {
-        if (request.user === undefined) {
-            throw new UnauthorizedException()
+        const user = await this.authService.validateUser(loginCredentialsDto)
+        if (user === undefined) {
+            throw new UnauthorizedException(
+                '이메일 혹은 비밀번호가 잘못되었습니다.',
+            )
         }
-        const { accessToken } = await this.authService.login(
-            request.user as any,
-        )
+        const { accessToken } = await this.authService.login(user)
         response.cookie(AuthConstants.cookieKey, accessToken, {
             httpOnly: true,
             maxAge: AuthConstants.accessTokenExpiresIn,
