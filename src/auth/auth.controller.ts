@@ -31,7 +31,7 @@ export class AuthController {
     }
 
     @Post('sign-up')
-    async signUp(@Body() { email }: SignUpCredentialsDto): Promise<string> {
+    async signUp(@Body() { email }: SignUpCredentialsDto): Promise<void> {
         return this.authService.createMagicLink(email)
     }
 

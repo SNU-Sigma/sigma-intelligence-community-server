@@ -5,23 +5,23 @@ import { PrismaService } from 'nestjs-prisma'
 import { User } from '@prisma/client'
 import { LoginCredentialsDto } from './dto/login-credentials.dto'
 import * as bcrypt from 'bcrypt'
-import { ConfigService } from '@nestjs/config'
 import { AuthConstants } from './auth.constants'
 import { MagicLinkPayload } from './models/MagicLinkPayload'
+import { MailerService } from '@nestjs-modules/mailer'
 
 @Injectable()
 export class AuthService {
     constructor(
         private jwtService: JwtService,
         private prisma: PrismaService,
-        private configService: ConfigService,
+        private mailerService: MailerService,
     ) {}
 
     private findMemberByEmail(email: string) {
         return AuthConstants.memberList.find((member) => member.email === email)
     }
 
-    async createMagicLink(email: string): Promise<string> {
+    async createMagicLink(email: string): Promise<void> {
         const member = this.findMemberByEmail(email)
         if (member === undefined) {
             throw new ForbiddenException('등록되지 않은 이메일입니다.')
@@ -30,7 +30,15 @@ export class AuthService {
         const token = await this.jwtService.signAsync(payload, {
             expiresIn: '30m',
         })
-        return `${AuthConstants.magicLinkBaseUrl}/set-password?token=${token}&email=${email}`
+        const link = `${AuthConstants.magicLinkBaseUrl}/set-password?token=${token}&email=${email}`
+        await this.mailerService.sendMail({
+            to: email,
+            subject: '[시그마 인텔리전스] 비밀번호 설정 요청',
+            template: 'password',
+            context: {
+                link,
+            },
+        })
     }
 
     async upsertPassword(token: string, password: string): Promise<User> {
