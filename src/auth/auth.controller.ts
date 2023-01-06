@@ -1,10 +1,4 @@
-import {
-    Controller,
-    Post,
-    Res,
-    UnauthorizedException,
-    Body,
-} from '@nestjs/common'
+import { Controller, Post, Res, Body, ForbiddenException } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
@@ -25,7 +19,7 @@ export class AuthController {
     ): Promise<void> {
         const user = await this.authService.validateUser(loginCredentialsDto)
         if (user === undefined) {
-            throw new UnauthorizedException(
+            throw new ForbiddenException(
                 '이메일 혹은 비밀번호가 잘못되었습니다.',
             )
         }
