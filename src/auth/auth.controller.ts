@@ -30,12 +30,12 @@ export class AuthController {
         })
     }
 
-    @Post('signup')
+    @Post('sign-up')
     async signUp(@Body() { email }: SignUpCredentialsDto): Promise<string> {
         return this.authService.createMagicLink(email)
     }
 
-    @Post('setpassword')
+    @Post('set-password')
     async setPassword(
         @Body() { password, token }: SetPasswordCredentialsDto,
         @Res({ passthrough: true }) response: Response,
