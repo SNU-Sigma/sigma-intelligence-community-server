@@ -4,7 +4,7 @@ import { JWTPayload } from './models/JWTPayload'
 import { PrismaService } from 'nestjs-prisma'
 import { User } from '@prisma/client'
 import { LoginCredentialsDto } from './dto/login-credentials.dto'
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt'
 import { ConfigService } from '@nestjs/config'
 import { AuthConstants } from './auth.constants'
 import { MagicLinkPayload } from './models/MagicLinkPayload'
@@ -44,6 +44,7 @@ export class AuthService {
                 },
             })
         } catch (e) {
+            console.error(e)
             throw new UnauthorizedException('유효하지 않은 토큰')
         }
     }
