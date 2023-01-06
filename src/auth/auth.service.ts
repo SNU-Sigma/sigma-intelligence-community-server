@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { JWTPayload } from './models/JWTPayload'
 import { PrismaService } from 'nestjs-prisma'
@@ -17,7 +17,15 @@ export class AuthService {
         private configService: ConfigService,
     ) {}
 
+    private findMemberByEmail(email: string) {
+        return AuthConstants.memberList.find((member) => member.email === email)
+    }
+
     async createMagicLink(email: string): Promise<string> {
+        const member = this.findMemberByEmail(email)
+        if (member === undefined) {
+            throw new ForbiddenException('등록되지 않은 이메일입니다.')
+        }
         const payload: MagicLinkPayload = { email }
         const token = await this.jwtService.signAsync(payload, {
             expiresIn: '30m',
@@ -29,6 +37,11 @@ export class AuthService {
         try {
             const { email } =
                 await this.jwtService.verifyAsync<MagicLinkPayload>(token)
+
+            const member = this.findMemberByEmail(email)
+            if (member === undefined) {
+                throw new Error()
+            }
             const hashedPassword = await bcrypt.hash(password, 10)
             return this.prisma.user.upsert({
                 where: {
@@ -37,15 +50,14 @@ export class AuthService {
                 create: {
                     email,
                     hashedPassword,
-                    name: '테스트 이름', // TODO: 저장된 값에서 찾기
+                    name: member.name,
                 },
                 update: {
                     hashedPassword,
                 },
             })
         } catch (e) {
-            console.error(e)
-            throw new UnauthorizedException('유효하지 않은 토큰')
+            throw new ForbiddenException('유효하지 않은 토큰')
         }
     }
 
