@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt'
 import { AuthConstants } from './auth.constants'
 import { MagicLinkPayload } from './models/MagicLinkPayload'
 import { MailerService } from '@nestjs-modules/mailer'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
         private jwtService: JwtService,
         private prisma: PrismaService,
         private mailerService: MailerService,
+        private configService: ConfigService,
     ) {}
 
     private findMemberByEmail(email: string) {
@@ -30,7 +32,9 @@ export class AuthService {
         const token = await this.jwtService.signAsync(payload, {
             expiresIn: '30m',
         })
-        const link = `${AuthConstants.magicLinkBaseUrl}/set-password?token=${token}&email=${email}`
+        const link = `${this.configService.get<string>(
+            'EMAIL_MAGIC_LINK_BASE_URL',
+        )}/set-password?token=${token}&email=${email}`
         await this.mailerService.sendMail({
             to: email,
             subject: '[시그마 인텔리전스] 비밀번호 설정 요청',
