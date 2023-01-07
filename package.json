@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
     "prisma:studio": "npx prisma studio",
-    "prisma:push": "prisma db push",
+    "prisma:push": "npx prisma db push",
     "migrate:dev": "npx prisma migrate dev",
     "migrate:dev:create": "npx prisma migrate dev --create-only",
     "migrate:deploy": "npx prisma migrate deploy",
