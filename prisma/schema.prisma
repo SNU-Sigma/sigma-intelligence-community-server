@@ -11,19 +11,25 @@ datasource db {
 }
 
 model User {
-  id             Int    @id @default(autoincrement())
-  email          String @unique
-  hashedPassword String
-  name           String
-  posts          Post[]
+  id    Int    @id @default(autoincrement())
+  email String @unique
+
+  userAuthId Int         @unique
+  userAuth   UserAuth    @relation(fields: [userAuthId], references: [id])
+  profileId  Int         @unique
+  profile    UserProfile @relation(fields: [profileId], references: [id])
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model UserAuth {
+  id   Int   @id @default(autoincrement())
+  User User?
 
-  User   User @relation(fields: [userId], references: [id])
-  userId Int
+  hashedPassword String
+}
+
+model UserProfile {
+  id   Int   @id @default(autoincrement())
+  User User?
+
+  name String
 }

@@ -57,11 +57,23 @@ export class AuthService {
                 },
                 create: {
                     email,
-                    hashedPassword,
-                    name: member.name,
+                    userAuth: {
+                        create: {
+                            hashedPassword,
+                        },
+                    },
+                    profile: {
+                        create: {
+                            name: member.name,
+                        },
+                    },
                 },
                 update: {
-                    hashedPassword,
+                    userAuth: {
+                        update: {
+                            hashedPassword,
+                        },
+                    },
                 },
             })
         } catch (e) {
@@ -77,12 +89,22 @@ export class AuthService {
             where: {
                 email,
             },
+            include: {
+                userAuth: {
+                    select: {
+                        hashedPassword: true,
+                    },
+                },
+            },
         })
         if (user === null) {
             return
         }
 
-        const match = await bcrypt.compare(password, user.hashedPassword)
+        const match = await bcrypt.compare(
+            password,
+            user.userAuth.hashedPassword,
+        )
 
         if (match === false) {
             return
@@ -94,7 +116,6 @@ export class AuthService {
         const payload: JWTPayload = {
             id: user.id,
             email: user.email,
-            name: user.name,
         }
 
         return {
