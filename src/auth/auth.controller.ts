@@ -6,12 +6,14 @@ import { AuthConstants } from './auth.constants'
 import { LoginCredentialsDto } from './dto/login-credentials.dto'
 import { SignUpCredentialsDto } from './dto/sign-up-credentials.dto'
 import { SetPasswordCredentialsDto } from './dto/set-password-credentials.dto'
+import { Public } from '../utility/decorators/public.decorator'
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Public()
     @Post('login')
     async login(
         @Body() loginCredentialsDto: LoginCredentialsDto,
@@ -30,11 +32,13 @@ export class AuthController {
         })
     }
 
+    @Public()
     @Post('sign-up')
     async signUp(@Body() { email }: SignUpCredentialsDto): Promise<void> {
         return this.authService.createMagicLink(email)
     }
 
+    @Public()
     @Post('set-password')
     async setPassword(
         @Body() { password, token }: SetPasswordCredentialsDto,

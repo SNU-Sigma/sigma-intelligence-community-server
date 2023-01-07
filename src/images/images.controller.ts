@@ -1,10 +1,8 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common'
+import { Controller, Get, Query } from '@nestjs/common'
 import { ImagesService } from './images.service'
 import { PreSignedUrlDto } from './dto/pre-signed-url.dto'
 import { ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 
-@UseGuards(JwtAuthGuard)
 @Controller('images')
 @ApiTags('images')
 export class ImagesController {
