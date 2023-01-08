@@ -29,6 +29,8 @@ export class AuthController {
         response.cookie(AuthConstants.cookieKey, accessToken, {
             httpOnly: true,
             maxAge: AuthConstants.accessTokenExpiresIn,
+            sameSite: 'none',
+            secure: true,
         })
     }
 
@@ -49,6 +51,8 @@ export class AuthController {
         response.cookie(AuthConstants.cookieKey, accessToken, {
             httpOnly: true,
             maxAge: AuthConstants.accessTokenExpiresIn,
+            sameSite: 'none',
+            secure: true,
         })
     }
 }
