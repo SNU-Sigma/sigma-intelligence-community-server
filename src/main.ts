@@ -9,9 +9,16 @@ import * as cookieParser from 'cookie-parser'
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
 
-    // FIXME: 추후 localhost와 실제 배포된 웹에서만 동작하도록 수정 필요
     app.enableCors({
-        origin: true,
+        origin: [
+            // Local
+            /http:\/\/localhost:.*/,
+            // TODO: 커스텀 도메인으로 변경
+            // Vercel Production
+            'https://sigma-intelligence-community.vercel.app/',
+            // Vercel Preview
+            /https:\/\/sigma-intelligence-community-.+-sigma-intelligence\.vercel\.app/,
+        ],
         credentials: true,
     })
 
