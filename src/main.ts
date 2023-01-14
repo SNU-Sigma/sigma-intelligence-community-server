@@ -13,9 +13,8 @@ async function bootstrap() {
         origin: [
             // Local
             /http:\/\/localhost:.*/,
-            // TODO: 커스텀 도메인으로 변경
-            // Vercel Production
-            'https://sigma-intelligence-community.vercel.app',
+            // Production
+            'https://web.sigma-intelligence.com',
             // Vercel Preview
             /https:\/\/sigma-intelligence-community-.+-sigma-intelligence\.vercel\.app/,
         ],

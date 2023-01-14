@@ -9,12 +9,13 @@ export class ImagesService {
     async createPreSignedUrlFromFileName(fileName: string) {
         const uniqueName = uuid.v4() + fileName
         const url = await this.awsService.createPreSignedUrl(uniqueName)
-        // FIXME: 하드코딩 제거 & sigma-intelligence.com 도메인으로 변경
-        const uploadedUrl =
-            'https://d287xoiphv5ynk.cloudfront.net/' + uniqueName
+        const uploadedUrl = `${distributionBaseUrl}/${uniqueName}`
         return {
             url,
             uploadedUrl,
         }
     }
 }
+
+// AWS CloudFront distribution URL
+const distributionBaseUrl = 'https://storage.sigma-intelligence.com'
