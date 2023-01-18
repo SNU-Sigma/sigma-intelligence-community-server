@@ -4,9 +4,9 @@ import { PassportStrategy } from '@nestjs/passport'
 import { User } from '@prisma/client'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
-import { AuthConstants } from '../auth.constants'
 import { AuthService } from '../auth.service'
 import { JWTPayload } from '../models/JWTPayload'
+import { Config } from '../../config'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ) {
         super({
             jwtFromRequest: (req: Request) => {
-                return req.cookies[AuthConstants.cookieKey]
+                return req.cookies[Config.auth.cookieKey]
             },
             ignoreExpiration: false,
             secretOrKey: configService.get<string>('JWT_SECRET'),

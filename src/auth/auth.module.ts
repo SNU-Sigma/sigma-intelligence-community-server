@@ -4,10 +4,10 @@ import { AuthController } from './auth.controller'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { AuthConstants } from './auth.constants'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { APP_GUARD } from '@nestjs/core'
 import { JwtAuthGuard } from './guards/jwt-auth.guard'
+import { Config } from '../config'
 
 @Module({
     imports: [
@@ -16,7 +16,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard'
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => ({
                 secret: configService.get<string>('JWT_SECRET'),
-                expiresIn: AuthConstants.accessTokenExpiresIn,
+                expiresIn: Config.auth.accessTokenExpiresIn,
             }),
             inject: [ConfigService],
         }),

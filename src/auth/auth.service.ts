@@ -5,10 +5,10 @@ import { PrismaService } from 'nestjs-prisma'
 import { User } from '@prisma/client'
 import { LoginCredentialsDto } from './dto/login-credentials.dto'
 import * as bcrypt from 'bcrypt'
-import { AuthConstants } from './auth.constants'
 import { MagicLinkPayload } from './models/MagicLinkPayload'
 import { MailerService } from '@nestjs-modules/mailer'
 import { ConfigService } from '@nestjs/config'
+import { Config } from '../config'
 
 @Injectable()
 export class AuthService {
@@ -20,7 +20,7 @@ export class AuthService {
     ) {}
 
     private findMemberByEmail(email: string) {
-        return AuthConstants.memberList.find((member) => member.email === email)
+        return Config.auth.memberList.find((member) => member.email === email)
     }
 
     async createMagicLink(email: string): Promise<void> {

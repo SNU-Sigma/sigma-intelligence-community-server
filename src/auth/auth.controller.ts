@@ -1,12 +1,12 @@
-import { Controller, Post, Res, Body, ForbiddenException } from '@nestjs/common'
+import { Body, Controller, ForbiddenException, Post, Res } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { Response } from 'express'
 import { ApiTags } from '@nestjs/swagger'
-import { AuthConstants } from './auth.constants'
 import { LoginCredentialsDto } from './dto/login-credentials.dto'
 import { SignUpCredentialsDto } from './dto/sign-up-credentials.dto'
 import { SetPasswordCredentialsDto } from './dto/set-password-credentials.dto'
 import { Public } from '../utility/decorators/public.decorator'
+import { Config } from '../config'
 
 @Controller('auth')
 @ApiTags('auth')
@@ -26,9 +26,9 @@ export class AuthController {
             )
         }
         const { accessToken } = await this.authService.login(user)
-        response.cookie(AuthConstants.cookieKey, accessToken, {
+        response.cookie(Config.auth.cookieKey, accessToken, {
             httpOnly: true,
-            maxAge: AuthConstants.accessTokenExpiresIn,
+            maxAge: Config.auth.accessTokenExpiresIn,
             sameSite: 'none',
             secure: true,
         })
@@ -48,9 +48,9 @@ export class AuthController {
     ): Promise<void> {
         const user = await this.authService.upsertPassword(token, password)
         const { accessToken } = await this.authService.login(user)
-        response.cookie(AuthConstants.cookieKey, accessToken, {
+        response.cookie(Config.auth.cookieKey, accessToken, {
             httpOnly: true,
-            maxAge: AuthConstants.accessTokenExpiresIn,
+            maxAge: Config.auth.accessTokenExpiresIn,
             sameSite: 'none',
             secure: true,
         })
