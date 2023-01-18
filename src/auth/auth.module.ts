@@ -15,7 +15,11 @@ import { Config } from '../config'
         JwtModule.registerAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => ({
-                secret: configService.get<string>('JWT_SECRET'),
+                secret:
+                    configService.get<string>('JWT_SECRET') ??
+                    (() => {
+                        throw new Error('JWT_SECRET 환경변수가 빠져있습니다.')
+                    })(),
                 expiresIn: Config.auth.accessTokenExpiresIn,
             }),
             inject: [ConfigService],

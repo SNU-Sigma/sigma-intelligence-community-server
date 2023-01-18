@@ -19,7 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 return req.cookies[Config.auth.cookieKey]
             },
             ignoreExpiration: false,
-            secretOrKey: configService.get<string>('JWT_SECRET'),
+            secretOrKey:
+                configService.get<string>('JWT_SECRET') ??
+                (() => {
+                    throw new Error('JWT_SECRET 환경변수가 빠져있습니다.')
+                })(),
         })
     }
 

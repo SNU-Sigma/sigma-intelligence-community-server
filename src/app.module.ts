@@ -18,9 +18,13 @@ import { Config } from './config'
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => {
                 const { email, host, userName } = Config.mailing
-                const password = configService.get<string>(
-                    'EMAIL_AUTH_PASSWORD',
-                )
+                const password =
+                    configService.get<string>('EMAIL_AUTH_PASSWORD') ??
+                    (() => {
+                        throw new Error(
+                            'EMAIL_AUTH_PASSWORD 환경변수가 빠져있습니다.',
+                        )
+                    })()
                 return {
                     transport: `smtps://${email}:${password}@${host}`,
                     defaults: {
