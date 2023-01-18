@@ -10,6 +10,11 @@ export class ConfigService {
 
         return {
             port: Number(process.env['PORT'] ?? 3000),
+            dataBaseUrl:
+                process.env['DATABASE_URL'] ??
+                (() => {
+                    throw new Error('DATABASE_URL 환경변수가 빠져있습니다.')
+                })(),
             auth: {
                 cookieKey: 'jwt',
                 // 7일 => ms
@@ -65,6 +70,7 @@ export class ConfigService {
             },
         } as const satisfies {
             port: number
+            dataBaseUrl: string
             auth: {
                 accessTokenExpiresIn: number
                 cookieKey: string
