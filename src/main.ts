@@ -2,9 +2,9 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
 import * as cookieParser from 'cookie-parser'
+import { ConfigService } from './config/config.service'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -38,7 +38,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, document)
 
     const configService = app.get(ConfigService)
-    await app.listen(configService.get('PORT', 3000))
+    await app.listen(configService.select(({ port }) => port))
 }
 
 bootstrap()

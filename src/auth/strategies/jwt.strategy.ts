@@ -1,12 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
 import { User } from '@prisma/client'
 import { Request } from 'express'
 import { Strategy } from 'passport-jwt'
 import { AuthService } from '../auth.service'
 import { JWTPayload } from '../models/JWTPayload'
-import { Config } from '../../config'
+import { ConfigService } from '../../config/config.service'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -16,14 +15,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ) {
         super({
             jwtFromRequest: (req: Request) => {
-                return req.cookies[Config.auth.cookieKey]
+                return req.cookies[
+                    configService.select(({ auth }) => auth.cookieKey)
+                ]
             },
             ignoreExpiration: false,
-            secretOrKey:
-                configService.get<string>('JWT_SECRET') ??
-                (() => {
-                    throw new Error('JWT_SECRET 환경변수가 빠져있습니다.')
-                })(),
+            secretOrKey: configService.select(({ auth }) => auth.jwtSecret),
         })
     }
 

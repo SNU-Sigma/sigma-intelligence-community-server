@@ -6,12 +6,15 @@ import { LoginCredentialsDto } from './dto/login-credentials.dto'
 import { SignUpCredentialsDto } from './dto/sign-up-credentials.dto'
 import { SetPasswordCredentialsDto } from './dto/set-password-credentials.dto'
 import { Public } from '../utility/decorators/public.decorator'
-import { Config } from '../config'
+import { ConfigService } from '../config/config.service'
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private configService: ConfigService,
+    ) {}
 
     @Public()
     @Post('login')
@@ -26,12 +29,18 @@ export class AuthController {
             )
         }
         const { accessToken } = await this.authService.login(user)
-        response.cookie(Config.auth.cookieKey, accessToken, {
-            httpOnly: true,
-            maxAge: Config.auth.accessTokenExpiresIn,
-            sameSite: 'none',
-            secure: true,
-        })
+        response.cookie(
+            this.configService.select(({ auth }) => auth.cookieKey),
+            accessToken,
+            {
+                httpOnly: true,
+                maxAge: this.configService.select(
+                    ({ auth }) => auth.accessTokenExpiresIn,
+                ),
+                sameSite: 'none',
+                secure: true,
+            },
+        )
     }
 
     @Public()
@@ -48,11 +57,17 @@ export class AuthController {
     ): Promise<void> {
         const user = await this.authService.upsertPassword(token, password)
         const { accessToken } = await this.authService.login(user)
-        response.cookie(Config.auth.cookieKey, accessToken, {
-            httpOnly: true,
-            maxAge: Config.auth.accessTokenExpiresIn,
-            sameSite: 'none',
-            secure: true,
-        })
+        response.cookie(
+            this.configService.select(({ auth }) => auth.cookieKey),
+            accessToken,
+            {
+                httpOnly: true,
+                maxAge: this.configService.select(
+                    ({ auth }) => auth.accessTokenExpiresIn,
+                ),
+                sameSite: 'none',
+                secure: true,
+            },
+        )
     }
 }
