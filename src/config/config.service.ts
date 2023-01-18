@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 
 @Injectable()
 export class ConfigService {
-    private configuration = (() => {
+    private static configuration = (() => {
         // .env 파일 로드해서 process.env에 추가
         dotenv.config()
 
@@ -93,7 +93,9 @@ export class ConfigService {
         }
     })()
 
-    select<T>(selector: (rootConfig: typeof this.configuration) => T): T {
-        return selector(this.configuration)
+    select<T>(
+        selector: (rootConfig: typeof ConfigService.configuration) => T,
+    ): T {
+        return selector(ConfigService.configuration)
     }
 }
