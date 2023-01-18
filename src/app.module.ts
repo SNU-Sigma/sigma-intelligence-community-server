@@ -8,6 +8,7 @@ import { PrismaModule } from 'nestjs-prisma'
 import { AuthModule } from './auth/auth.module'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
+import { Config } from './config'
 
 @Module({
     imports: [
@@ -16,16 +17,12 @@ import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
         MailerModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => {
-                const email = configService.get<string>('EMAIL_AUTH_EMAIL')
+                const { email, host, userName } = Config.mailing
                 const password = configService.get<string>(
                     'EMAIL_AUTH_PASSWORD',
                 )
-                const emailHost = configService.get<string>('EMAIL_HOST')
-                const userName = configService.get<string>(
-                    'EMAIL_FROM_USER_NAME',
-                )
                 return {
-                    transport: `smtps://${email}:${password}@${emailHost}`,
+                    transport: `smtps://${email}:${password}@${host}`,
                     defaults: {
                         from: `"${userName}" <${email}>`,
                     },
