@@ -1,22 +1,23 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { PrinterReservation, User } from '@prisma/client'
+import { User } from '@prisma/client'
+import { addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
-import { ReservationInformation } from './dto/reservation-info.dto'
+import { CreateReservationDto } from './dto/create-resercation.dto'
+import { PrinterReservationDto } from './dto/printer-reservation.dto'
 
 @Injectable()
 export class PrinterReservationService {
     constructor(private readonly prisma: PrismaService) {}
 
     async takeReservation(
-        reservationInformation: ReservationInformation,
+        reservationInformation: CreateReservationDto,
         user: User,
-    ): Promise<PrinterReservation> {
+    ): Promise<PrinterReservationDto> {
         const printerId = reservationInformation.printerId
-        const startTime = new Date(reservationInformation.day)
-        startTime.setHours(reservationInformation.startTime)
-        const endTime = new Date(reservationInformation.day)
-        endTime.setHours(
-            reservationInformation.startTime + reservationInformation.usageTime,
+        const startTime = new Date(reservationInformation.startDateTime)
+        const endTime = addHours(
+            new Date(reservationInformation.startDateTime),
+            reservationInformation.usageTime,
         )
         const reason = reservationInformation.reason
 
@@ -24,27 +25,25 @@ export class PrinterReservationService {
         const reservationCheck = await this.prisma.printerReservation.findFirst(
             {
                 where: {
+                    AND: { printerId },
                     OR: [
                         {
-                            printerId: printerId,
-                            startTime: {
+                            requestStartTime: {
                                 gte: startTime,
                                 lte: endTime,
                             },
                         },
                         {
-                            printerId: printerId,
-                            endTime: {
+                            requestEndTime: {
                                 gte: startTime,
                                 lte: endTime,
                             },
                         },
                         {
-                            printerId: printerId,
-                            startTime: {
+                            requestStartTime: {
                                 lte: startTime,
                             },
-                            endTime: {
+                            requestEndTime: {
                                 gte: endTime,
                             },
                         },
@@ -55,15 +54,15 @@ export class PrinterReservationService {
 
         if (reservationCheck) {
             throw new BadRequestException(
-                `Printer ${reservationCheck.printerId} has reservation from ${reservationCheck.startTime} to ${reservationCheck.endTime}`,
+                `Printer ${reservationCheck.printerId} has reservation from ${reservationCheck.requestStartTime} to ${reservationCheck.requestEndTime}`,
             )
         }
 
         const reservation = await this.prisma.printerReservation.create({
             data: {
                 printerId: printerId,
-                startTime: startTime,
-                endTime: endTime,
+                requestStartTime: startTime,
+                requestEndTime: endTime,
                 reason: reason,
                 userId: user.id,
             },
