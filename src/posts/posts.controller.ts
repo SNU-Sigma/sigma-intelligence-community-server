@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { CreatePostDto } from './dto/create-post.dto'
 import { PostsService } from './posts.service'
 import { User, Post as PostModel } from '@prisma/client'
@@ -10,6 +10,7 @@ import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
+    //테스트용
     @Get('/')
     getAllPost(@ExtractUser() user: User) {
         return this.postsService.getAllPost(user)
