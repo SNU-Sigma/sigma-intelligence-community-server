@@ -20,6 +20,8 @@ model User {
   profile    UserProfile @relation(fields: [profileId], references: [id])
 
   reservations PrinterReservation[]
+
+  posts      Post[]      @relation("WrittenPosts")
 }
 
 model UserAuth {
@@ -45,4 +47,15 @@ model PrinterReservation {
 
   userId Int
   User   User @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  title       String
+  description String
+  images      String[]   @default([])
+  user        User       @relation("WrittenPosts", fields: [userId], references: [id])
+  userId      Int
 }
