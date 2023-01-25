@@ -28,6 +28,10 @@ export class ConfigService {
                     { email: 'naemduu@snu.ac.kr', name: '황두환' },
                     { email: 'lisi2337qar@snu.ac.kr', name: '박준하' },
                     { email: 'dongwooryu@snu.ac.kr', name: '류동우' },
+                    { email: 'kjsbrian@snu.ac.kr', name: '곽재석' },
+                    { email: 'mushroomhong@snu.ac.kr', name: '홍성우' },
+                    { email: 'jsy1105@snu.ac.kr', name: '정승연' },
+                    { email: 'jayj00@snu.ac.kr', name: '홍기주' },
                 ],
                 jwtSecret:
                     process.env['JWT_SECRET'] ??
