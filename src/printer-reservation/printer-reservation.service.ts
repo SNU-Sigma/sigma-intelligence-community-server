@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
-import { CreateReservationDto } from './dto/create-resercation.dto'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import { PrinterReservationDto } from './dto/printer-reservation.dto'
 
 @Injectable()

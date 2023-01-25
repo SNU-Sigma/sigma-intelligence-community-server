@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import { User } from '@prisma/client'
-import { CreateReservationDto } from './dto/create-resercation.dto'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import { PrinterReservationService } from './printer-reservation.service'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import { ApiTags } from '@nestjs/swagger'
