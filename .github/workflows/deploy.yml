@@ -19,5 +19,5 @@ jobs:
           heroku_app_name: 'sigma-intelligence-community'
           heroku_email: 'record.snusigma@gmail.com'
           healthcheck: 'https://sigma-intelligence-community.herokuapp.com/health'
-          delay: 60
+          delay: 10
           rollbackonhealthcheckfailed: true
