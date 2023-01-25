@@ -14,7 +14,7 @@ export class PrinterReservationService {
         user: User,
     ): Promise<PrinterReservationDto> {
         const printerId = reservationInformation.printerId
-        const startTime = new Date(reservationInformation.startDateTime)
+        const startTime = reservationInformation.startDateTime
         const endTime = addHours(
             new Date(reservationInformation.startDateTime),
             reservationInformation.usageTime,
