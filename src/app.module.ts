@@ -9,6 +9,7 @@ import { PrismaModule } from 'nestjs-prisma'
 import { AuthModule } from './auth/auth.module'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
+import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
         AwsModule,
         ImagesModule,
         AuthModule,
+        PrinterReservationModule,
     ],
     controllers: [AppController],
     providers: [AppService],

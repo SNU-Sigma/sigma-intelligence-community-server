@@ -18,6 +18,8 @@ model User {
   userAuth   UserAuth    @relation(fields: [userAuthId], references: [id])
   profileId  Int         @unique
   profile    UserProfile @relation(fields: [profileId], references: [id])
+
+  reservations PrinterReservation[]
 }
 
 model UserAuth {
@@ -32,4 +34,15 @@ model UserProfile {
   User User?
 
   name String
+}
+
+model PrinterReservation {
+  id               Int      @id @default(autoincrement())
+  printerId        Int
+  requestStartTime DateTime
+  requestEndTime   DateTime
+  reason           String
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
 }
