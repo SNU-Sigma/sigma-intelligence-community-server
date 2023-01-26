@@ -90,8 +90,6 @@ export class PrinterReservationService {
             },
         })
 
-        console.log(reservations[0]?.User.profile.name)
-
         return reservations
     }
 
