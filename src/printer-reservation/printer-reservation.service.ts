@@ -71,7 +71,7 @@ export class PrinterReservationService {
         return reservation
     }
 
-    async getAllReservations(
+    async getReservationsByPrinterId(
         printerId: number,
     ): Promise<PrinterReservationDto[]> {
         const reservations = this.prisma.printerReservation.findMany({
@@ -84,5 +84,17 @@ export class PrinterReservationService {
         })
 
         return reservations
+    }
+
+    async deleteReservationById(
+        reservationId: number,
+    ): Promise<PrinterReservationDto> {
+        const reservationToDelete = this.prisma.printerReservation.delete({
+            where: {
+                reservationId,
+            },
+        })
+
+        return reservationToDelete
     }
 }

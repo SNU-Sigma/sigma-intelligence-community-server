@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { CreateReservationDto } from './dto/create-resercation.dto'
 import { PrinterReservationService } from './printer-reservation.service'
@@ -22,10 +22,21 @@ export class PrinterReservationController {
         )
     }
 
-    @Post('/reservations')
-    getAllReservations(
-        @Body() printerId: number,
+    @Get('/reservations/:printerId')
+    getReservationsByPrinterId(
+        @Param('printerId') printerId: number,
     ): Promise<PrinterReservationDto[]> {
-        return this.printerReservationService.getAllReservations(printerId)
+        return this.printerReservationService.getReservationsByPrinterId(
+            printerId,
+        )
+    }
+
+    @Delete('/reservations/:reservationId')
+    deleteReservationById(
+        @Param('reservationId') reservationId: number,
+    ): Promise<PrinterReservationDto> {
+        return this.printerReservationService.deleteReservationById(
+            reservationId,
+        )
     }
 }
