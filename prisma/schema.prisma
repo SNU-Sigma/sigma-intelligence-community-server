@@ -37,7 +37,7 @@ model UserProfile {
 }
 
 model PrinterReservation {
-  reservationId    Int      @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   printerId        Int
   requestStartTime DateTime
   requestEndTime   DateTime

@@ -74,14 +74,23 @@ export class PrinterReservationService {
     async getReservationsByPrinterId(
         printerId: number,
     ): Promise<PrinterReservationDto[]> {
-        const reservations = this.prisma.printerReservation.findMany({
+        const reservations = await this.prisma.printerReservation.findMany({
             where: {
                 printerId,
             },
             orderBy: {
                 requestStartTime: 'asc',
             },
+            include: {
+                User: {
+                    include: {
+                        profile: true,
+                    },
+                },
+            },
         })
+
+        console.log(reservations[0]?.User.profile.name)
 
         return reservations
     }
@@ -89,11 +98,13 @@ export class PrinterReservationService {
     async deleteReservationById(
         reservationId: number,
     ): Promise<PrinterReservationDto> {
-        const reservationToDelete = this.prisma.printerReservation.delete({
-            where: {
-                reservationId,
+        const reservationToDelete = await this.prisma.printerReservation.delete(
+            {
+                where: {
+                    id: reservationId,
+                },
             },
-        })
+        )
 
         return reservationToDelete
     }
