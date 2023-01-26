@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+} from '@nestjs/common'
 import { User } from '@prisma/client'
 import { CreateReservationDto } from './dto/create-resercation.dto'
 import { PrinterReservationService } from './printer-reservation.service'
@@ -24,7 +32,7 @@ export class PrinterReservationController {
 
     @Get('/reservations/:printerId')
     getReservationsByPrinterId(
-        @Param('printerId') printerId: number,
+        @Param('printerId', ParseIntPipe) printerId: number,
     ): Promise<PrinterReservationDto[]> {
         return this.printerReservationService.getReservationsByPrinterId(
             printerId,
@@ -33,7 +41,7 @@ export class PrinterReservationController {
 
     @Delete('/reservations/:reservationId')
     deleteReservationById(
-        @Param('reservationId') reservationId: number,
+        @Param('reservationId', ParseIntPipe) reservationId: number,
     ): Promise<PrinterReservationDto> {
         return this.printerReservationService.deleteReservationById(
             reservationId,
