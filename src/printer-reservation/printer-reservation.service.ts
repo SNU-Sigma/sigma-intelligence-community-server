@@ -70,4 +70,19 @@ export class PrinterReservationService {
 
         return reservation
     }
+
+    async getAllReservations(
+        printerId: number,
+    ): Promise<PrinterReservationDto[]> {
+        const reservations = this.prisma.printerReservation.findMany({
+            where: {
+                printerId,
+            },
+            orderBy: {
+                requestStartTime: 'asc',
+            },
+        })
+
+        return reservations
+    }
 }

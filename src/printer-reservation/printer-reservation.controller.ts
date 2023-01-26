@@ -21,4 +21,11 @@ export class PrinterReservationController {
             user,
         )
     }
+
+    @Post('/reservations')
+    getAllReservations(
+        @Body() printerId: number,
+    ): Promise<PrinterReservationDto[]> {
+        return this.printerReservationService.getAllReservations(printerId)
+    }
 }
