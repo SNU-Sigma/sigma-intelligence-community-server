@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
-import { CreateReservationDto } from './dto/create-resercation.dto'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import { PrinterReservationDto } from './dto/printer-reservation.dto'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class PrinterReservationService {
         user: User,
     ): Promise<PrinterReservationDto> {
         const printerId = reservationInformation.printerId
-        const startTime = new Date(reservationInformation.startDateTime)
+        const startTime = reservationInformation.startDateTime
         const endTime = addHours(
             new Date(reservationInformation.startDateTime),
             reservationInformation.usageTime,

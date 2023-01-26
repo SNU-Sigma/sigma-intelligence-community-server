@@ -1,12 +1,13 @@
-import { IsISO8601, IsNumber, IsString, Max, Min } from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsDate, IsNumber, IsString, Max, Min } from 'class-validator'
 
 export class CreateReservationDto {
     @IsNumber()
     printerId: number
 
-    @IsString()
-    @IsISO8601({ strict: true, strictSeparator: true })
-    startDateTime: string
+    @Type(() => Date)
+    @IsDate()
+    startDateTime: Date
 
     @IsNumber()
     @Min(1)
