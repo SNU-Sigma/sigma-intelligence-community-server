@@ -33,7 +33,7 @@ export class PrinterReservationController {
     @Get('/reservations/:printerId')
     getReservationsByPrinterId(
         @Param('printerId', ParseIntPipe) printerId: number,
-    ): Promise<PrinterReservationDto[]> {
+    ): Promise<Array<PrinterReservationDto>> {
         return this.printerReservationService.getReservationsByPrinterId(
             printerId,
         )

@@ -1,4 +1,4 @@
-import { User, UserAuth } from '@prisma/client'
+import { User } from '@prisma/client'
 import { UserProfileDto } from './user-profile.dto'
 
 export class UserDto implements User {
@@ -7,6 +7,5 @@ export class UserDto implements User {
     userAuthId: number
     profileId: number
 
-    userAuth?: UserAuth
-    profile?: UserProfileDto
+    profile: UserProfileDto
 }

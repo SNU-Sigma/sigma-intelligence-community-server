@@ -49,6 +49,13 @@ export class PrinterReservationService {
                         },
                     ],
                 },
+                include: {
+                    User: {
+                        include: {
+                            profile: true,
+                        },
+                    },
+                },
             },
         )
 
@@ -66,6 +73,7 @@ export class PrinterReservationService {
                 reason: reason,
                 userId: user.id,
             },
+            include: printerReservationIncludeArgs,
         })
 
         return reservation
@@ -73,7 +81,7 @@ export class PrinterReservationService {
 
     async getReservationsByPrinterId(
         printerId: number,
-    ): Promise<PrinterReservationDto[]> {
+    ): Promise<Array<PrinterReservationDto>> {
         const reservations = await this.prisma.printerReservation.findMany({
             where: {
                 printerId,
@@ -101,9 +109,16 @@ export class PrinterReservationService {
                 where: {
                     id: reservationId,
                 },
+                include: printerReservationIncludeArgs,
             },
         )
 
         return reservationToDelete
     }
+}
+
+const printerReservationIncludeArgs = {
+    User: {
+        include: { profile: true },
+    },
 }
