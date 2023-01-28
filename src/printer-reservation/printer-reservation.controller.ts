@@ -6,6 +6,7 @@ import {
     Param,
     ParseIntPipe,
     Post,
+    Query,
 } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { CreateReservationDto } from './dto/create-resercation.dto'
@@ -13,6 +14,7 @@ import { PrinterReservationService } from './printer-reservation.service'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import { ApiTags } from '@nestjs/swagger'
 import { PrinterReservationDto } from './dto/printer-reservation.dto'
+import { ParseDatePipe } from './pipes/ParseDatePipe.pipe'
 
 @Controller('printer-reservation')
 @ApiTags('printer-reservation')
@@ -33,9 +35,11 @@ export class PrinterReservationController {
     @Get('/reservations/:printerId')
     getReservationsByPrinterId(
         @Param('printerId', ParseIntPipe) printerId: number,
+        @Query('date', ParseDatePipe) date: Date,
     ): Promise<Array<PrinterReservationDto>> {
         return this.printerReservationService.getReservationsByPrinterId(
             printerId,
+            date,
         )
     }
 
