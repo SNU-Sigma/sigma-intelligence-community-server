@@ -5,9 +5,12 @@ import { ValidationPipe } from '@nestjs/common'
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
 import * as cookieParser from 'cookie-parser'
 import { ConfigService } from './config/config.service'
+import { herokuSSLRedirect } from './utility/middleware/herokuSSLRedirect'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
+
+    app.use(herokuSSLRedirect())
 
     app.enableCors({
         origin: [
