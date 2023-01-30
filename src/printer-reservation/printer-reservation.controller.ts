@@ -14,7 +14,7 @@ import { PrinterReservationService } from './printer-reservation.service'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import { ApiTags } from '@nestjs/swagger'
 import { PrinterReservationDto } from './dto/printer-reservation.dto'
-import { ParseDatePipe } from './pipes/ParseDatePipe.pipe'
+import { ParseDatePipe } from '../utility/pipe/parse-date.pipe'
 
 @Controller('printer-reservation')
 @ApiTags('printer-reservation')
