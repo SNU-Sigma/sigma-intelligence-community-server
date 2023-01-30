@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { User } from '@prisma/client'
-import { addHours } from 'date-fns'
+import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
 import { CreateReservationDto } from './dto/create-reservation.dto'
 import { PrinterReservationDto } from './dto/printer-reservation.dto'
@@ -49,6 +49,7 @@ export class PrinterReservationService {
                         },
                     ],
                 },
+                include: printerReservationIncludeArgs,
             },
         )
 
@@ -66,8 +67,51 @@ export class PrinterReservationService {
                 reason: reason,
                 userId: user.id,
             },
+            include: printerReservationIncludeArgs,
         })
 
         return reservation
     }
+
+    async getReservationsByPrinterId(
+        printerId: number,
+        date: Date,
+    ): Promise<Array<PrinterReservationDto>> {
+        const reservations = await this.prisma.printerReservation.findMany({
+            where: {
+                printerId,
+                requestStartTime: {
+                    gte: date,
+                    lte: addDays(date, 1),
+                },
+            },
+            orderBy: {
+                requestStartTime: 'asc',
+            },
+            include: printerReservationIncludeArgs,
+        })
+
+        return reservations
+    }
+
+    async deleteReservationById(
+        reservationId: number,
+    ): Promise<PrinterReservationDto> {
+        const reservationToDelete = await this.prisma.printerReservation.delete(
+            {
+                where: {
+                    id: reservationId,
+                },
+                include: printerReservationIncludeArgs,
+            },
+        )
+
+        return reservationToDelete
+    }
+}
+
+const printerReservationIncludeArgs = {
+    user: {
+        include: { profile: true },
+    },
 }

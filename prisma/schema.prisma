@@ -24,14 +24,14 @@ model User {
 
 model UserAuth {
   id   Int   @id @default(autoincrement())
-  User User?
+  user User?
 
   hashedPassword String
 }
 
 model UserProfile {
   id   Int   @id @default(autoincrement())
-  User User?
+  user User?
 
   name String
 }
@@ -44,5 +44,5 @@ model PrinterReservation {
   reason           String
 
   userId Int
-  User   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 }

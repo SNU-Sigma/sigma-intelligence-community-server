@@ -1,4 +1,5 @@
 import { PrinterReservation } from '@prisma/client'
+import { UserDto } from 'src/common/dto/user.dto'
 
 export class PrinterReservationDto implements PrinterReservation {
     id: number
@@ -7,4 +8,5 @@ export class PrinterReservationDto implements PrinterReservation {
     requestEndTime: Date
     reason: string
     userId: number
+    user: UserDto
 }
