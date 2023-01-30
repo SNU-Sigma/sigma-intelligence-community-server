@@ -8,5 +8,5 @@ export class PrinterReservationDto implements PrinterReservation {
     requestEndTime: Date
     reason: string
     userId: number
-    User: UserDto
+    user: UserDto
 }

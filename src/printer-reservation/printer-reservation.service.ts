@@ -111,7 +111,7 @@ export class PrinterReservationService {
 }
 
 const printerReservationIncludeArgs = {
-    User: {
+    user: {
         include: { profile: true },
     },
 }
