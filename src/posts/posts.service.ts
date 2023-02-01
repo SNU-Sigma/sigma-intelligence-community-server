@@ -7,9 +7,12 @@ import { CreatePostDto } from './dto/create-post.dto'
 export class PostsService {
     constructor(private prisma: PrismaService) {}
 
-    //테스트용
-    getAllPost(user: User) {
-        return `<h1>This is ${user.email}'s posts!<h1>`
+    async getAllPostsOfUser(user: User): Promise<Post[]> {
+        return this.prisma.user
+            .findUniqueOrThrow({
+                where: { id: user.id },
+            })
+            .posts()
     }
 
     async createPost(createPostDto: CreatePostDto, user: User): Promise<Post> {

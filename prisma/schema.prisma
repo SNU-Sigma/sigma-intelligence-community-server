@@ -21,7 +21,7 @@ model User {
 
   reservations PrinterReservation[]
 
-  posts      Post[]      @relation("WrittenPosts")
+  posts      Post[]
 }
 
 model UserAuth {
@@ -55,7 +55,7 @@ model Post {
   updatedAt   DateTime   @updatedAt
   title       String
   description String
-  images      String[]   @default([])
-  user        User       @relation("WrittenPosts", fields: [userId], references: [id])
+  images      String[]
+  user        User       @relation(fields: [userId], references: [id])
   userId      Int
 }

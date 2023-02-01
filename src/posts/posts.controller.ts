@@ -10,10 +10,9 @@ import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
-    //테스트용
     @Get('/')
-    getAllPost(@ExtractUser() user: User) {
-        return this.postsService.getAllPost(user)
+    getAllPostsOfUser(@ExtractUser() user: User): Promise<PostModel[]> {
+        return this.postsService.getAllPostsOfUser(user)
     }
 
     @Post()
