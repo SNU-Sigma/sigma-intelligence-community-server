@@ -10,7 +10,7 @@ import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
-    @Get('/')
+    @Get('/my-posts')
     getAllPostsOfUser(@ExtractUser() user: User): Promise<PostModel[]> {
         return this.postsService.getAllPostsOfUser(user)
     }
