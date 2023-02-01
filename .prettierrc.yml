@@ -8,5 +8,6 @@ overrides:
       - '*.yml'
       - '*.yaml'
       - '*.json'
+      - '*.prisma'
     options:
       tabWidth: 2
