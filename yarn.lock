@@ -1902,10 +1902,38 @@
   dependencies:
     react "18.2.0"
 
+"@react-email/container@^0.0.7-canary.1":
+  version "0.0.7-canary.1"
+  resolved "https://registry.yarnpkg.com/@react-email/container/-/container-0.0.7-canary.1.tgz#5646ec64d47918f409454095b692ffb85c5ad8ab"
+  integrity sha512-TL3Ve1B7U4NiSs0EXNjSAKzbe6HQkWtNg2bwSP/6OvDFg4dXtgCSNoOG2bMcqxiEFMrEgUW4intnG+/FxrdtvA==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/head@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/head/-/head-0.0.4.tgz#59595a401ac22b34df6e85db8d882861b069119e"
+  integrity sha512-hTvxNtTFCOyt3zdG62G3AkKO1Vm8ZhN0XIUv0iSdYachvzYvW10FNHwTqzXbXor4Bvz1GRKF+FyIYVD6AnaHog==
+  dependencies:
+    react "18.2.0"
+
 "@react-email/html@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@react-email/html/-/html-0.0.3.tgz#05581193ce8acd68a03739ba9101fade601feba2"
   integrity sha512-NtHzGq38StO95W/rASYy+qdzFEpqUDmEe5RMygxeaV/TTZbtLLRqycwk5B/dxq4DfreZE/GL0vAg6u6sMVLTPA==
+
+"@react-email/img@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/img/-/img-0.0.4.tgz#1500e5c5b1d00cbb99c8ceac6566e34dad5a8817"
+  integrity sha512-ILiCdm/rBqUzpptFr180wWohrFtKL3EsvUnjH61GDfOMgJWhdE7G9JOW/GqmL3nw++cnwC54dkEYXUjUpf8gpQ==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/preview@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@react-email/preview/-/preview-0.0.5.tgz#17937c9ef738dc9cc1501c5706846652924213d4"
+  integrity sha512-3OwWQvuxqi8MdJ1PZHH6XLrG9N8Z3uAN9cVWOlqb4WuhR1KwTVPgZwSy/zuzTiuhhejpO8/ctC7tMfZSpXdThg==
+  dependencies:
+    react "18.2.0"
 
 "@react-email/render@^0.0.2":
   version "0.0.2"
@@ -1914,6 +1942,20 @@
   dependencies:
     pretty "2.0.0"
     react-dom "18.2.0"
+
+"@react-email/section@^0.0.7-canary.1":
+  version "0.0.7-canary.1"
+  resolved "https://registry.yarnpkg.com/@react-email/section/-/section-0.0.7-canary.1.tgz#0f20a67c0e3a5b8a04bbb416c2b1a036d61f43ab"
+  integrity sha512-6xv5klBn4dIWTG9iEdLMrrrPrB7o4+HFBkrr6njWIGi7qWnFDvFVTAfM5ZNPOnDYinfXcRj5BYD5shynk+R+CQ==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/text@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/text/-/text-0.0.4.tgz#097b725fbd834de90f0f993fd4ddbd716a53fe29"
+  integrity sha512-U99QEmgmlfs3TijP/761+pogEX4AIF/6qyFRlfJQuSLOmFbRzuSUG9dLeNIO4W4yMQTcqVjKggHc4sgPxPy1OQ==
+  dependencies:
+    react "18.2.0"
 
 "@schematics/angular@~13.3.0":
   version "13.3.10"
