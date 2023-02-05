@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
 import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
+import { AdministratorModule } from './administrator/administrator.module'
 
 @Module({
     imports: [
@@ -37,6 +38,7 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
         ImagesModule,
         AuthModule,
         PrinterReservationModule,
+        AdministratorModule,
     ],
     controllers: [AppController],
     providers: [AppService],

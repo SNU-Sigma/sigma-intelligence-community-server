@@ -18,7 +18,7 @@ enum Role {
 model User {
   id    Int    @id @default(autoincrement())
   email String @unique
-  role  Role
+  role  Role   @default(COMMON)
 
   userAuthId Int         @unique
   userAuth   UserAuth    @relation(fields: [userAuthId], references: [id])
