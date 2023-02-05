@@ -1890,10 +1890,29 @@
   resolved "https://registry.npmjs.org/@prisma/engines/-/engines-4.7.1.tgz"
   integrity sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==
 
+"@prisma/prisma-fmt-wasm@4.9.0-44.b29121153404aa8eda60ec38e41e477cc1c0ee66":
+  version "4.9.0-44.b29121153404aa8eda60ec38e41e477cc1c0ee66"
+  resolved "https://registry.yarnpkg.com/@prisma/prisma-fmt-wasm/-/prisma-fmt-wasm-4.9.0-44.b29121153404aa8eda60ec38e41e477cc1c0ee66.tgz#c04fc39b697e113378f2c641bda0d564841c61ac"
+  integrity sha512-+bsLKaDvK46lVN8dv0FicmnbG5/si9A4ONXFd6sYLYX1T3+Z6H5eq+MRbXZOK993s1vJvTgD0LYcRHcieMeHDw==
+
 "@react-email/button@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@react-email/button/-/button-0.0.5.tgz#c84d7321bf681a5e8fbde17b48a891c4d9864ec7"
   integrity sha512-k8yDJ5b9gFriy0543qR8zI2tyOBvob7YwaPxfVorDH0ajPucocjbzymopzxyHU13LMafdYbId/kPjoANwdSr+g==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/container@^0.0.7-canary.1":
+  version "0.0.7-canary.1"
+  resolved "https://registry.yarnpkg.com/@react-email/container/-/container-0.0.7-canary.1.tgz#5646ec64d47918f409454095b692ffb85c5ad8ab"
+  integrity sha512-TL3Ve1B7U4NiSs0EXNjSAKzbe6HQkWtNg2bwSP/6OvDFg4dXtgCSNoOG2bMcqxiEFMrEgUW4intnG+/FxrdtvA==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/head@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/head/-/head-0.0.4.tgz#59595a401ac22b34df6e85db8d882861b069119e"
+  integrity sha512-hTvxNtTFCOyt3zdG62G3AkKO1Vm8ZhN0XIUv0iSdYachvzYvW10FNHwTqzXbXor4Bvz1GRKF+FyIYVD6AnaHog==
   dependencies:
     react "18.2.0"
 
@@ -1902,6 +1921,20 @@
   resolved "https://registry.yarnpkg.com/@react-email/html/-/html-0.0.3.tgz#05581193ce8acd68a03739ba9101fade601feba2"
   integrity sha512-NtHzGq38StO95W/rASYy+qdzFEpqUDmEe5RMygxeaV/TTZbtLLRqycwk5B/dxq4DfreZE/GL0vAg6u6sMVLTPA==
 
+"@react-email/img@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/img/-/img-0.0.4.tgz#1500e5c5b1d00cbb99c8ceac6566e34dad5a8817"
+  integrity sha512-ILiCdm/rBqUzpptFr180wWohrFtKL3EsvUnjH61GDfOMgJWhdE7G9JOW/GqmL3nw++cnwC54dkEYXUjUpf8gpQ==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/preview@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@react-email/preview/-/preview-0.0.5.tgz#17937c9ef738dc9cc1501c5706846652924213d4"
+  integrity sha512-3OwWQvuxqi8MdJ1PZHH6XLrG9N8Z3uAN9cVWOlqb4WuhR1KwTVPgZwSy/zuzTiuhhejpO8/ctC7tMfZSpXdThg==
+  dependencies:
+    react "18.2.0"
+
 "@react-email/render@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@react-email/render/-/render-0.0.2.tgz#b59e7803ea3a8efa0dac94d373ba3014c1456997"
@@ -1909,6 +1942,20 @@
   dependencies:
     pretty "2.0.0"
     react-dom "18.2.0"
+
+"@react-email/section@^0.0.7-canary.1":
+  version "0.0.7-canary.1"
+  resolved "https://registry.yarnpkg.com/@react-email/section/-/section-0.0.7-canary.1.tgz#0f20a67c0e3a5b8a04bbb416c2b1a036d61f43ab"
+  integrity sha512-6xv5klBn4dIWTG9iEdLMrrrPrB7o4+HFBkrr6njWIGi7qWnFDvFVTAfM5ZNPOnDYinfXcRj5BYD5shynk+R+CQ==
+  dependencies:
+    react "18.2.0"
+
+"@react-email/text@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/text/-/text-0.0.4.tgz#097b725fbd834de90f0f993fd4ddbd716a53fe29"
+  integrity sha512-U99QEmgmlfs3TijP/761+pogEX4AIF/6qyFRlfJQuSLOmFbRzuSUG9dLeNIO4W4yMQTcqVjKggHc4sgPxPy1OQ==
+  dependencies:
+    react "18.2.0"
 
 "@schematics/angular@~13.3.0":
   version "13.3.10"
@@ -6551,6 +6598,18 @@ prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==
+
+prettier-plugin-organize-imports@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-3.2.2.tgz#91993365e017daa5d0d28d8183179834224d8dd1"
+  integrity sha512-e97lE6odGSiHonHJMTYC0q0iLXQyw0u5z/PJpvP/3vRy6/Zi9kLBwFAbEGjDzIowpjQv8b+J04PDamoUSQbzGA==
+
+prettier-plugin-prisma@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-prisma/-/prettier-plugin-prisma-4.9.0.tgz#d242ec5caade5ac8d8262cd4299acb245524eeb7"
+  integrity sha512-qR6/FyViOXi3KZZ8q/WsdjwPoVnjMl9YFj0DAa81t38qP3ySBrOcg23AxvFX5QCTjMslY/+HLuwgRuQqlDDBrw==
+  dependencies:
+    "@prisma/prisma-fmt-wasm" "4.9.0-44.b29121153404aa8eda60ec38e41e477cc1c0ee66"
 
 prettier@^2.3.2:
   version "2.8.0"

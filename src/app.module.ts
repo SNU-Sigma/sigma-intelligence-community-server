@@ -11,6 +11,7 @@ import { MailerModule } from '@nestjs-modules/mailer'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
 import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
 import { AdministratorModule } from './administrator/administrator.module'
+import { PostsModule } from './posts/posts.module'
 
 @Module({
     imports: [
@@ -39,6 +40,7 @@ import { AdministratorModule } from './administrator/administrator.module'
         AuthModule,
         PrinterReservationModule,
         AdministratorModule,
+        PostsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
