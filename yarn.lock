@@ -1895,17 +1895,17 @@
   resolved "https://registry.yarnpkg.com/@prisma/prisma-fmt-wasm/-/prisma-fmt-wasm-4.9.0-44.b29121153404aa8eda60ec38e41e477cc1c0ee66.tgz#c04fc39b697e113378f2c641bda0d564841c61ac"
   integrity sha512-+bsLKaDvK46lVN8dv0FicmnbG5/si9A4ONXFd6sYLYX1T3+Z6H5eq+MRbXZOK993s1vJvTgD0LYcRHcieMeHDw==
 
-"@react-email/button@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@react-email/button/-/button-0.0.5.tgz#c84d7321bf681a5e8fbde17b48a891c4d9864ec7"
-  integrity sha512-k8yDJ5b9gFriy0543qR8zI2tyOBvob7YwaPxfVorDH0ajPucocjbzymopzxyHU13LMafdYbId/kPjoANwdSr+g==
+"@react-email/button@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@react-email/button/-/button-0.0.6.tgz#3f0b84b03d2253a3a4204312755b65004c021afc"
+  integrity sha512-h0QVT6tZq5sDWbkEUj29VUk18aGzJPZDeeKz0fPJVHpyAgKyVePYrRdQVzIAwLiwzZL8xfZ9yB6jyA1aPgZIoA==
   dependencies:
     react "18.2.0"
 
-"@react-email/container@^0.0.7-canary.1":
-  version "0.0.7-canary.1"
-  resolved "https://registry.yarnpkg.com/@react-email/container/-/container-0.0.7-canary.1.tgz#5646ec64d47918f409454095b692ffb85c5ad8ab"
-  integrity sha512-TL3Ve1B7U4NiSs0EXNjSAKzbe6HQkWtNg2bwSP/6OvDFg4dXtgCSNoOG2bMcqxiEFMrEgUW4intnG+/FxrdtvA==
+"@react-email/container@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@react-email/container/-/container-0.0.7.tgz#4790d21ab501c02b5cec63b28b74b6fc21cd07f2"
+  integrity sha512-EOrXGnNUQ6mILDMSXCW2ljqqCOOOmcVQqX6QY2eRB+kQR8iDtJN7BMUP58EHkfMsJzt2nnHgoh415eeHZYIa3w==
   dependencies:
     react "18.2.0"
 
@@ -1916,10 +1916,10 @@
   dependencies:
     react "18.2.0"
 
-"@react-email/html@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@react-email/html/-/html-0.0.3.tgz#05581193ce8acd68a03739ba9101fade601feba2"
-  integrity sha512-NtHzGq38StO95W/rASYy+qdzFEpqUDmEe5RMygxeaV/TTZbtLLRqycwk5B/dxq4DfreZE/GL0vAg6u6sMVLTPA==
+"@react-email/html@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/html/-/html-0.0.4.tgz#3de13cad8c1f4c487227b3f8fd79e790d239d8c0"
+  integrity sha512-7tRYSnudYAWez+NkPWOM8yLZH7EuYFtYdiLPnzpD+pf4cdk16Gz4up531DaIX6dNBbfbyEFpQxhXZxGeJ5ZkfQ==
 
 "@react-email/img@^0.0.4":
   version "0.0.4"
@@ -1943,10 +1943,10 @@
     pretty "2.0.0"
     react-dom "18.2.0"
 
-"@react-email/section@^0.0.7-canary.1":
-  version "0.0.7-canary.1"
-  resolved "https://registry.yarnpkg.com/@react-email/section/-/section-0.0.7-canary.1.tgz#0f20a67c0e3a5b8a04bbb416c2b1a036d61f43ab"
-  integrity sha512-6xv5klBn4dIWTG9iEdLMrrrPrB7o4+HFBkrr6njWIGi7qWnFDvFVTAfM5ZNPOnDYinfXcRj5BYD5shynk+R+CQ==
+"@react-email/section@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@react-email/section/-/section-0.0.8.tgz#fc2991f6bbdf3c7c3c5fcc45e444a55aa1b31da2"
+  integrity sha512-Y3HxwaNkh04UgLx4dsez3uRfFIm5WJMgJB+9zFyHreKa3QwCcm+XSYN2ObsSyCAqISScXNeukgu/z75+BwaJ+g==
   dependencies:
     react "18.2.0"
 
