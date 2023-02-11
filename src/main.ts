@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
-import { Logger } from 'nestjs-pino'
+import { Logger, LoggerErrorInterceptor } from 'nestjs-pino'
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
 import { AppModule } from './app.module'
 import { ConfigService } from './config/config.service'
@@ -12,6 +12,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, { bufferLogs: true })
 
     app.useLogger(app.get(Logger))
+    app.useGlobalInterceptors(new LoggerErrorInterceptor())
     app.use(herokuSSLRedirect())
 
     app.enableCors({
