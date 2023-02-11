@@ -44,8 +44,15 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
                 return {
                     pinoHttp:
                         process.env.NODE_ENV === 'production'
-                            ? stream
-                            : { transport: { target: 'pino-pretty' } },
+                            ? {
+                                  stream,
+                                  customProps: () => ({ context: 'HTTP' }),
+                                  level: 'info',
+                              }
+                            : {
+                                  transport: { target: 'pino-pretty' },
+                                  level: 'debug',
+                              },
                 }
             },
         }),
