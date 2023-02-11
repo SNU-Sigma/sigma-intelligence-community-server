@@ -1,16 +1,17 @@
+import { MailerModule } from '@nestjs-modules/mailer'
 import { Module } from '@nestjs/common'
+import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
+import { PrismaModule } from 'nestjs-prisma'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { ConfigService } from './config/config.service'
-import { ConfigModule } from './config/config.module'
-import { AwsModule } from './aws/aws.module'
-import { ImagesModule } from './images/images.module'
-import { PrismaModule } from 'nestjs-prisma'
 import { AuthModule } from './auth/auth.module'
-import { MailerModule } from '@nestjs-modules/mailer'
-import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
-import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
+import { AwsModule } from './aws/aws.module'
+import { ConfigModule } from './config/config.module'
+import { ConfigService } from './config/config.service'
+import { ImagesModule } from './images/images.module'
+import { LoggerModule } from './logger/logger.module'
 import { PostsModule } from './posts/posts.module'
+import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
 
 @Module({
     imports: [
@@ -34,6 +35,7 @@ import { PostsModule } from './posts/posts.module'
             },
             inject: [ConfigService],
         }),
+        LoggerModule,
         AwsModule,
         ImagesModule,
         AuthModule,
