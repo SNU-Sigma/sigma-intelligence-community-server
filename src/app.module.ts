@@ -1,7 +1,10 @@
 import { MailerModule } from '@nestjs-modules/mailer'
 import { Module } from '@nestjs/common'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
-import { WinstonModule } from 'nest-winston'
+import {
+    utilities as nestWinstonModuleUtilities,
+    WinstonModule,
+} from 'nest-winston'
 import { PrismaModule } from 'nestjs-prisma'
 import { S3StreamLogger } from 's3-streamlogger'
 import { format, transports } from 'winston'
@@ -55,8 +58,9 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
                     transports: [
                         new transports.Console({
                             format: format.combine(
-                                format.colorize(),
-                                format.simple(),
+                                format.timestamp(),
+                                format.ms(),
+                                nestWinstonModuleUtilities.format.nestLike(),
                             ),
                             level: 'verbose',
                         }),
