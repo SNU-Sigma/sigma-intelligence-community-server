@@ -2,25 +2,16 @@ import { ValidationPipe } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
-import { WinstonModule } from 'nest-winston'
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma'
-import { format, transports } from 'winston'
 import { AppModule } from './app.module'
 import { ConfigService } from './config/config.service'
 import { herokuSSLRedirect } from './utility/middleware/herokuSSLRedirect'
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule, {
-        logger: WinstonModule.createLogger({
-            transports: [
-                new transports.Console({
-                    format: format.combine(format.colorize(), format.simple()),
-                    level: 'verbose',
-                }),
-            ],
-        }),
-    })
+    const app = await NestFactory.create(AppModule)
 
+    app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER))
     app.use(herokuSSLRedirect())
 
     app.enableCors({

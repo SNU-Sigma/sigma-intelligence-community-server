@@ -1,7 +1,9 @@
 import { MailerModule } from '@nestjs-modules/mailer'
 import { Module } from '@nestjs/common'
 import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
+import { WinstonModule } from 'nest-winston'
 import { PrismaModule } from 'nestjs-prisma'
+import { format, transports } from 'winston'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -17,6 +19,14 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
     imports: [
         ConfigModule,
         PrismaModule.forRoot({ isGlobal: true }),
+        WinstonModule.forRoot({
+            transports: [
+                new transports.Console({
+                    format: format.combine(format.colorize(), format.simple()),
+                    level: 'verbose',
+                }),
+            ],
+        }),
         MailerModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => {
