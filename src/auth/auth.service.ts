@@ -1,13 +1,13 @@
-import { ForbiddenException, Injectable } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
-import { JWTPayload } from './models/JWTPayload'
-import { PrismaService } from 'nestjs-prisma'
-import { User } from '@prisma/client'
-import { LoginCredentialsDto } from './dto/login-credentials.dto'
-import * as bcrypt from 'bcrypt'
-import { MagicLinkPayload } from './models/MagicLinkPayload'
 import { MailerService } from '@nestjs-modules/mailer'
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { User } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
+import { PrismaService } from 'nestjs-prisma'
 import { ConfigService } from '../config/config.service'
+import { LoginCredentialsDto } from './dto/login-credentials.dto'
+import { JWTPayload } from './models/JWTPayload'
+import { MagicLinkPayload } from './models/MagicLinkPayload'
 
 @Injectable()
 export class AuthService {
@@ -18,6 +18,8 @@ export class AuthService {
         private configService: ConfigService,
     ) {}
 
+    private logger = new Logger(AuthService.name)
+
     private findMemberByEmail(email: string) {
         return this.configService
             .select(({ auth }) => auth.memberList)
@@ -27,6 +29,9 @@ export class AuthService {
     async createMagicLink(email: string): Promise<void> {
         const member = this.findMemberByEmail(email)
         if (member === undefined) {
+            this.logger.log(
+                `등록되지 않은 이메일: [ ${email} ] 접속 시도했습니다.`,
+            )
             throw new ForbiddenException('등록되지 않은 이메일입니다.')
         }
         const payload: MagicLinkPayload = { email }
