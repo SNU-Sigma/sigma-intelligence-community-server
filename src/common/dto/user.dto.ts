@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Role, User } from '@prisma/client'
-import { PrinterReservationDto } from './printer-reservation.dto'
 import { UserProfileDto } from './user-profile.dto'
 
 export class UserDto implements User {
