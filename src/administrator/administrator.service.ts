@@ -11,7 +11,11 @@ export class AdministratorService {
             await this.prisma.user.findMany({
                 include: {
                     profile: true,
-                    reservations: true,
+                    _count: {
+                        select: {
+                            reservations: true,
+                        },
+                    },
                 },
             })
         ).map((userStat) => {
@@ -22,7 +26,7 @@ export class AdministratorService {
                 userAuthId: userStat.userAuthId,
                 profileId: userStat.profileId,
                 profile: userStat.profile,
-                reservationCount: userStat.reservations.length,
+                reservationCount: userStat._count.reservations,
             }
         })
 
