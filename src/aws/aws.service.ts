@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { Injectable } from '@nestjs/common'
 import { ConfigService } from '../config/config.service'
 
 @Injectable()
@@ -25,6 +25,16 @@ export class AwsService {
         return getSignedUrl(this.s3Client, command, {
             expiresIn: config.expiresIn,
         })
+    }
+
+    // FIXME: 추후에는 S3Stream 자체를 만들어서 return해주기 (지금은 s3-streamlogger에 의존)
+    getSharedConfigurationForLogging() {
+        return {
+            region: config.region,
+            bucketName: config.bucketName,
+            folderName: 'logs-v1',
+            ...this.configService.select(({ aws }) => aws),
+        }
     }
 }
 
