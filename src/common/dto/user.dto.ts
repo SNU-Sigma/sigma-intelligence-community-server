@@ -1,8 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { Role, User } from '@prisma/client'
-import { PrinterReservationWithoutUserDto } from './printer-reservation.dto'
+import { PrinterReservationDto } from './printer-reservation.dto'
 import { UserProfileDto } from './user-profile.dto'
 
-export class UserWithoutReservationsDto implements User {
+export class UserDto implements User {
     id: number
     email: string
     role: Role
@@ -12,13 +13,14 @@ export class UserWithoutReservationsDto implements User {
     profile: UserProfileDto
 }
 
-export class UserWithReservationsDto implements User {
+export class UserStatisticDto implements User {
     id: number
     email: string
+    @ApiProperty({ enum: Role })
     role: Role
     userAuthId: number
     profileId: number
 
     profile: UserProfileDto
-    reservations: Array<PrinterReservationWithoutUserDto>
+    reservationCount: number
 }
