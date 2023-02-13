@@ -32,6 +32,22 @@ async function main() {
             })
         }),
     )
+    await prisma.user.create({
+        data: {
+            email: 'admin@snu.ac.kr',
+            role: 'ADMIN',
+            userAuth: {
+                create: {
+                    hashedPassword,
+                },
+            },
+            profile: {
+                create: {
+                    name: '관리자',
+                },
+            },
+        },
+    })
 }
 
 main()

@@ -4,6 +4,7 @@ import { ReactAdapter } from '@webtre/nestjs-mailer-react-adapter'
 import { LoggerModule } from 'nestjs-pino'
 import { PrismaModule } from 'nestjs-prisma'
 import { S3StreamLogger } from 's3-streamlogger'
+import { AdministratorModule } from './administrator/administrator.module'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -78,6 +79,7 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
         ImagesModule,
         AuthModule,
         PrinterReservationModule,
+        AdministratorModule,
         PostsModule,
     ],
     controllers: [AppController],

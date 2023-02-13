@@ -3,7 +3,7 @@ import { User } from '@prisma/client'
 import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
 import { CreateReservationDto } from './dto/create-reservation.dto'
-import { PrinterReservationDto } from './dto/printer-reservation.dto'
+import { PrinterReservationWithUserDto } from '../common/dto/printer-reservation.dto'
 
 @Injectable()
 export class PrinterReservationService {
@@ -12,7 +12,7 @@ export class PrinterReservationService {
     async takeReservation(
         reservationInformation: CreateReservationDto,
         user: User,
-    ): Promise<PrinterReservationDto> {
+    ): Promise<PrinterReservationWithUserDto> {
         const printerId = reservationInformation.printerId
         const startTime = reservationInformation.startDateTime
         const endTime = addHours(
@@ -76,7 +76,7 @@ export class PrinterReservationService {
     async getReservationsByPrinterId(
         printerId: number,
         date: Date,
-    ): Promise<Array<PrinterReservationDto>> {
+    ): Promise<Array<PrinterReservationWithUserDto>> {
         const reservations = await this.prisma.printerReservation.findMany({
             where: {
                 printerId,
@@ -96,7 +96,7 @@ export class PrinterReservationService {
 
     async deleteReservationById(
         reservationId: number,
-    ): Promise<PrinterReservationDto> {
+    ): Promise<PrinterReservationWithUserDto> {
         const reservationToDelete = await this.prisma.printerReservation.delete(
             {
                 where: {
