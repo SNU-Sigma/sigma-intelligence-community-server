@@ -19,3 +19,17 @@ export class PrinterReservationDto implements PrinterReservation {
     reason: string
     userId: number
 }
+
+export class PrinterReservationWithUserAndIsMineDto
+    implements PrinterReservation
+{
+    id: number
+    printerId: number
+    requestStartTime: Date
+    requestEndTime: Date
+    reason: string
+    userId: number
+
+    user: UserDto
+    isMine: boolean
+}
