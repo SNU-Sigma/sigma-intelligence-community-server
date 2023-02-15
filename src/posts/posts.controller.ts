@@ -11,6 +11,11 @@ import { PostsService } from './posts.service'
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
+    @Get('/all-posts')
+    getAllPosts(@ExtractUser() user: User): Promise<PostDto[]> {
+        return this.postsService.getAllPosts(user)
+    }
+
     @Get('/my-posts')
     getAllPostsOfUser(@ExtractUser() user: User): Promise<PostDto[]> {
         return this.postsService.getAllPostsOfUser(user)

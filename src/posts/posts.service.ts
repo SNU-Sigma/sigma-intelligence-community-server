@@ -8,6 +8,20 @@ import { PostDto } from './dto/post.dto'
 export class PostsService {
     constructor(private prisma: PrismaService) {}
 
+    async getAllPosts(user: User): Promise<PostDto[]> {
+        const allPosts: PostDto[] = await this.prisma.post.findMany({
+            include: { user: { include: { profile: true } } },
+        })
+        for (const postDto of allPosts) {
+            if (postDto.userId === user.id) {
+                postDto.isMyPost = true
+            } else {
+                postDto.isMyPost = false
+            }
+        }
+        return allPosts
+    }
+
     async getAllPostsOfUser(user: User): Promise<PostDto[]> {
         return this.prisma.user
             .findUniqueOrThrow({

@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client'
+import { Post, User } from '@prisma/client'
 
 export class PostDto implements Post {
     id: number
@@ -8,4 +8,6 @@ export class PostDto implements Post {
     description: string
     images: Array<string>
     userId: number
+    user?: User
+    isMyPost?: boolean
 }
