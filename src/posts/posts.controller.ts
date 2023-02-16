@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import { CreatePostDto } from './dto/create-post.dto'
-import { PostDto } from './dto/post.dto'
+import { PostDto, PostFeedDto } from './dto/post.dto'
 import { PostsService } from './posts.service'
 
 @Controller('posts')
@@ -11,8 +11,13 @@ import { PostsService } from './posts.service'
 export class PostsController {
     constructor(private postsService: PostsService) {}
 
+    @Get('/all-posts')
+    getAllPosts(@ExtractUser() user: User): Promise<Array<PostFeedDto>> {
+        return this.postsService.getAllPosts(user)
+    }
+
     @Get('/my-posts')
-    getAllPostsOfUser(@ExtractUser() user: User): Promise<PostDto[]> {
+    getAllPostsOfUser(@ExtractUser() user: User): Promise<Array<PostDto>> {
         return this.postsService.getAllPostsOfUser(user)
     }
 
