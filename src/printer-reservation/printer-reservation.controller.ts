@@ -12,8 +12,8 @@ import { ApiTags } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import {
-    PrinterReservationWithUserAndIsMineDto,
-    PrinterReservationWithUserDto,
+    ListedPrinterReservationDto,
+    PrinterReservationDto,
 } from '../common/dto/printer-reservation.dto'
 import { ParseDatePipe } from '../utility/pipe/parse-date.pipe'
 import { CreateReservationDto } from './dto/create-reservation.dto'
@@ -28,7 +28,7 @@ export class PrinterReservationController {
     takeReservation(
         @Body() reservationInformation: CreateReservationDto,
         @ExtractUser() user: User,
-    ): Promise<PrinterReservationWithUserDto> {
+    ): Promise<PrinterReservationDto> {
         return this.printerReservationService.takeReservation(
             reservationInformation,
             user,
@@ -40,7 +40,7 @@ export class PrinterReservationController {
         @ExtractUser() user: User,
         @Param('printerId', ParseIntPipe) printerId: number,
         @Query('date', ParseDatePipe) date: Date,
-    ): Promise<Array<PrinterReservationWithUserAndIsMineDto>> {
+    ): Promise<Array<ListedPrinterReservationDto>> {
         return this.printerReservationService.getReservationsByPrinterId(
             user,
             printerId,
@@ -51,7 +51,7 @@ export class PrinterReservationController {
     @Delete('/reservations/:reservationId')
     deleteReservationById(
         @Param('reservationId', ParseIntPipe) reservationId: number,
-    ): Promise<PrinterReservationWithUserDto> {
+    ): Promise<PrinterReservationDto> {
         return this.printerReservationService.deleteReservationById(
             reservationId,
         )
