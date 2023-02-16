@@ -2,8 +2,11 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
+import {
+    ListedPrinterReservationDto,
+    PrinterReservationDto,
+} from '../common/dto/printer-reservation.dto'
 import { CreateReservationDto } from './dto/create-reservation.dto'
-import { PrinterReservationWithUserDto } from '../common/dto/printer-reservation.dto'
 
 @Injectable()
 export class PrinterReservationService {
@@ -12,7 +15,7 @@ export class PrinterReservationService {
     async takeReservation(
         reservationInformation: CreateReservationDto,
         user: User,
-    ): Promise<PrinterReservationWithUserDto> {
+    ): Promise<PrinterReservationDto> {
         const printerId = reservationInformation.printerId
         const startTime = reservationInformation.startDateTime
         const endTime = addHours(
@@ -74,9 +77,10 @@ export class PrinterReservationService {
     }
 
     async getReservationsByPrinterId(
+        user: User,
         printerId: number,
         date: Date,
-    ): Promise<Array<PrinterReservationWithUserDto>> {
+    ): Promise<Array<ListedPrinterReservationDto>> {
         const reservations = await this.prisma.printerReservation.findMany({
             where: {
                 printerId,
@@ -91,12 +95,17 @@ export class PrinterReservationService {
             include: printerReservationIncludeArgs,
         })
 
-        return reservations
+        return reservations.map((reservation) => {
+            return {
+                ...reservation,
+                isMine: user.id === reservation.userId,
+            }
+        })
     }
 
     async deleteReservationById(
         reservationId: number,
-    ): Promise<PrinterReservationWithUserDto> {
+    ): Promise<PrinterReservationDto> {
         const reservationToDelete = await this.prisma.printerReservation.delete(
             {
                 where: {
