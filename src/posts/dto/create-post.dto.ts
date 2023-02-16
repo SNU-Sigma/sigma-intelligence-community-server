@@ -12,5 +12,5 @@ export class CreatePostDto {
     @IsArray()
     @ArrayMaxSize(10)
     @IsString({ each: true })
-    images: string[]
+    images: Array<string>
 }
