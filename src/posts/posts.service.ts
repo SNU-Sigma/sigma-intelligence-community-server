@@ -11,6 +11,9 @@ export class PostsService {
     async getAllPosts(user: User): Promise<Array<PostFeedDto>> {
         const allPosts = await this.prisma.post.findMany({
             include: { user: { include: { profile: true } } },
+            orderBy: {
+                createdAt: 'desc',
+            },
         })
         return allPosts.map((postDto) => {
             return {
