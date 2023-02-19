@@ -28,7 +28,11 @@ export class PostsService {
             .findUniqueOrThrow({
                 where: { id: user.id },
             })
-            .posts()
+            .posts({
+                orderBy: {
+                    createdAt: 'desc',
+                },
+            })
     }
 
     async createPost(
