@@ -27,7 +27,7 @@ model User {
 
   reservations PrinterReservation[]
 
-  posts      Post[]
+  posts Post[]
 }
 
 model UserAuth {
@@ -41,7 +41,10 @@ model UserProfile {
   id   Int   @id @default(autoincrement())
   user User?
 
-  name String
+  name         String
+  studentId    Int?
+  major        String?
+  studentImage String?
 }
 
 model PrinterReservation {
@@ -56,12 +59,12 @@ model PrinterReservation {
 }
 
 model Post {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   title       String
   description String
   images      String[]
-  user        User       @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
   userId      Int
 }
