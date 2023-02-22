@@ -1,9 +1,19 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Patch,
+    Post,
+} from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
 import { CreatePostDto } from './dto/create-post.dto'
 import { PostDto, PostFeedDto } from './dto/post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
 import { PostsService } from './posts.service'
 
 @Controller('posts')
@@ -28,5 +38,22 @@ export class PostsController {
     ): Promise<PostDto> {
         console.log(createPostDto)
         return this.postsService.createPost(createPostDto, user)
+    }
+
+    @Patch('/:id')
+    updatePost(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updatePostDto: UpdatePostDto,
+        @ExtractUser() user: User,
+    ): Promise<PostDto> {
+        return this.postsService.updatePost(id, updatePostDto, user)
+    }
+
+    @Delete('/:id')
+    deletePost(
+        @Param('id', ParseIntPipe) id: number,
+        @ExtractUser() user: User,
+    ): Promise<PostDto> {
+        return this.postsService.deletePost(id, user)
     }
 }

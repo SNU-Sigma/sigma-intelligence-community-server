@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common'
+import {
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common'
 import { User } from '@prisma/client'
 import { PrismaService } from 'nestjs-prisma'
 import { CreatePostDto } from './dto/create-post.dto'
 import { PostDto, PostFeedDto } from './dto/post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
 
 @Injectable()
 export class PostsService {
@@ -41,5 +46,36 @@ export class PostsService {
                 userId: user.id,
             },
         })
+    }
+
+    async getPostById(id: number, user: User): Promise<PostDto> {
+        const found = await this.prisma.post.findUnique({
+            where: {
+                id,
+            },
+        })
+        if (!found) {
+            throw new NotFoundException(`Can't find Post with id ${id}`)
+        } else if (found.userId !== user.id) {
+            throw new ForbiddenException('Unauthorized User')
+        }
+        return found
+    }
+
+    async updatePost(
+        id: number,
+        updatePostDto: UpdatePostDto,
+        user: User,
+    ): Promise<PostDto> {
+        await this.getPostById(id, user)
+        return this.prisma.post.update({
+            where: { id },
+            data: updatePostDto,
+        })
+    }
+
+    async deletePost(id: number, user: User): Promise<PostDto> {
+        await this.getPostById(id, user)
+        return this.prisma.post.delete({ where: { id } })
     }
 }
