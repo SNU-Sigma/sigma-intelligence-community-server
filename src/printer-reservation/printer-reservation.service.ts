@@ -33,12 +33,12 @@ export class PrinterReservationService {
                         {
                             requestStartTime: {
                                 gte: startTime,
-                                lte: endTime,
+                                lt: endTime,
                             },
                         },
                         {
                             requestEndTime: {
-                                gte: startTime,
+                                gt: startTime,
                                 lte: endTime,
                             },
                         },
