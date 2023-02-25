@@ -51,9 +51,11 @@ export class PrinterReservationController {
     @Delete('/reservations/:reservationId')
     deleteReservationById(
         @Param('reservationId', ParseIntPipe) reservationId: number,
+        @ExtractUser() user: User,
     ): Promise<PrinterReservationDto> {
         return this.printerReservationService.deleteReservationById(
             reservationId,
+            user.id,
         )
     }
 }

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+    BadRequestException,
+    ForbiddenException,
+    Injectable,
+} from '@nestjs/common'
 import { User } from '@prisma/client'
 import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
@@ -33,12 +37,12 @@ export class PrinterReservationService {
                         {
                             requestStartTime: {
                                 gte: startTime,
-                                lte: endTime,
+                                lt: endTime,
                             },
                         },
                         {
                             requestEndTime: {
-                                gte: startTime,
+                                gt: startTime,
                                 lte: endTime,
                             },
                         },
@@ -113,9 +117,23 @@ export class PrinterReservationService {
         })
     }
 
+    async checkOwnershipOfReservation(
+        reservationId: number,
+        userId: User['id'],
+    ) {
+        const reservation = await this.prisma.printerReservation.findUnique({
+            where: { id: reservationId },
+        })
+        if (reservation?.userId !== userId) {
+            throw new ForbiddenException('Unauthorized User')
+        }
+    }
+
     async deleteReservationById(
         reservationId: number,
+        userId: User['id'],
     ): Promise<PrinterReservationDto> {
+        await this.checkOwnershipOfReservation(reservationId, userId)
         const reservationToDelete = await this.prisma.printerReservation.delete(
             {
                 where: {
