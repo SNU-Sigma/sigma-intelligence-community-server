@@ -83,11 +83,21 @@ export class PrinterReservationService {
     ): Promise<Array<ListedPrinterReservationDto>> {
         const reservations = await this.prisma.printerReservation.findMany({
             where: {
-                printerId,
-                requestStartTime: {
-                    gte: date,
-                    lte: addDays(date, 1),
-                },
+                AND: { printerId },
+                OR: [
+                    {
+                        requestStartTime: {
+                            gte: date,
+                            lt: addDays(date, 1),
+                        },
+                    },
+                    {
+                        requestEndTime: {
+                            gt: date,
+                            lte: addDays(date, 1),
+                        },
+                    },
+                ],
             },
             orderBy: {
                 requestStartTime: 'asc',
