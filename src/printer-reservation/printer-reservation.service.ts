@@ -6,11 +6,12 @@ import {
 import { User } from '@prisma/client'
 import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
+import { UserDto } from '../common/dto/user.dto'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import {
     ListedPrinterReservationDto,
     PrinterReservationDto,
-} from '../common/dto/printer-reservation.dto'
-import { CreateReservationDto } from './dto/create-reservation.dto'
+} from './dto/printer-reservation.dto'
 
 @Injectable()
 export class PrinterReservationService {
@@ -77,7 +78,10 @@ export class PrinterReservationService {
             include: printerReservationIncludeArgs,
         })
 
-        return reservation
+        return {
+            ...reservation,
+            user: UserDto.fromUserIncludeProfile(reservation.user),
+        }
     }
 
     async getReservationsByPrinterId(
@@ -112,12 +116,13 @@ export class PrinterReservationService {
         return reservations.map((reservation) => {
             return {
                 ...reservation,
+                user: UserDto.fromUserIncludeProfile(reservation.user),
                 isMine: user.id === reservation.userId,
             }
         })
     }
 
-    async checkOwnershipOfReservation(
+    private async checkOwnershipOfReservation(
         reservationId: number,
         userId: User['id'],
     ) {
@@ -132,18 +137,27 @@ export class PrinterReservationService {
     async deleteReservationById(
         reservationId: number,
         userId: User['id'],
-    ): Promise<PrinterReservationDto> {
+    ): Promise<void> {
         await this.checkOwnershipOfReservation(reservationId, userId)
-        const reservationToDelete = await this.prisma.printerReservation.delete(
-            {
-                where: {
-                    id: reservationId,
-                },
-                include: printerReservationIncludeArgs,
+        await this.prisma.printerReservation.delete({
+            where: {
+                id: reservationId,
             },
-        )
+            include: printerReservationIncludeArgs,
+        })
+    }
 
-        return reservationToDelete
+    async getMyReservations(
+        userId: User['id'],
+    ): Promise<Array<PrinterReservationDto>> {
+        const reservations = await this.prisma.printerReservation.findMany({
+            where: { userId },
+            include: printerReservationIncludeArgs,
+        })
+        return reservations.map(({ user, ...rest }) => ({
+            ...rest,
+            user: UserDto.fromUserIncludeProfile(user),
+        }))
     }
 }
 
