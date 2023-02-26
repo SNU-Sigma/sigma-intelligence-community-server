@@ -27,20 +27,17 @@ export class UsersService {
         user: User,
         { freshmanYear, profileImageUrl, major }: UpdateUserProfileDto,
     ): Promise<UserDto> {
-        return this.prisma.user
-            .update({
-                where: { id: user.id },
-                data: {
-                    profile: {
-                        update: {
-                            freshmanYear,
-                            profileImageUrl,
-                            major,
-                        },
-                    },
-                },
-                include: { profile: true },
-            })
-            .then(UserDto.fromUserIncludeProfile)
+        const profile = await this.prisma.userProfile.update({
+            where: { id: user.profileId },
+            data: {
+                freshmanYear,
+                profileImageUrl,
+                major,
+            },
+        })
+        return {
+            ...user,
+            profile: UserProfileDto.fromUserProfile(profile),
+        }
     }
 }
