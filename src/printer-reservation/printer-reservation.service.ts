@@ -6,12 +6,12 @@ import {
 import { User } from '@prisma/client'
 import { addDays, addHours } from 'date-fns'
 import { PrismaService } from 'nestjs-prisma'
+import { UserDto } from '../common/dto/user.dto'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import {
     ListedPrinterReservationDto,
     PrinterReservationDto,
-} from '../common/dto/printer-reservation.dto'
-import { UserDto } from '../common/dto/user.dto'
-import { CreateReservationDto } from './dto/create-reservation.dto'
+} from './dto/printer-reservation.dto'
 
 @Injectable()
 export class PrinterReservationService {

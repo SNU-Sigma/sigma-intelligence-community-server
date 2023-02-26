@@ -11,12 +11,12 @@ import {
 import { ApiTags } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { ExtractUser } from 'src/utility/decorators/extract-user.decorator'
+import { ParseDatePipe } from '../utility/pipe/parse-date.pipe'
+import { CreateReservationDto } from './dto/create-reservation.dto'
 import {
     ListedPrinterReservationDto,
     PrinterReservationDto,
-} from '../common/dto/printer-reservation.dto'
-import { ParseDatePipe } from '../utility/pipe/parse-date.pipe'
-import { CreateReservationDto } from './dto/create-reservation.dto'
+} from './dto/printer-reservation.dto'
 import { PrinterReservationService } from './printer-reservation.service'
 
 @Controller('printer-reservation')
