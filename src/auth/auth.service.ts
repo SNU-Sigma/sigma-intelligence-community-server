@@ -32,7 +32,8 @@ export class AuthService {
             this.logger.log(
                 `등록되지 않은 이메일: [ ${email} ] 접속 시도했습니다.`,
             )
-            throw new ForbiddenException('등록되지 않은 이메일입니다.')
+            // FIXME: 전시회 위해 임시로 아무 이메일이나 허용 / 추후 주석 제거 필요
+            // throw new ForbiddenException('등록되지 않은 이메일입니다.')
         }
         const payload: MagicLinkPayload = { email }
         const token = await this.jwtService.signAsync(payload, {
@@ -56,7 +57,11 @@ export class AuthService {
             const { email } =
                 await this.jwtService.verifyAsync<MagicLinkPayload>(token)
 
-            const member = this.findMemberByEmail(email)
+            // FIXME: 전시회 위해 임시로 아무 이메일이나 허용 / 추후 ?? 뒷부분 제거 필요
+            const member = this.findMemberByEmail(email) ?? {
+                name: '홈커밍',
+                email,
+            }
             if (member === undefined) {
                 throw new Error()
             }
