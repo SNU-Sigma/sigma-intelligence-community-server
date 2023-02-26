@@ -1,10 +1,16 @@
 import { UserProfile } from '@prisma/client'
+import { IsNumber, IsString } from 'class-validator'
 
 export class UserProfileDto implements UserProfile {
+    @IsNumber()
     id: number
+    @IsString()
     name: string
+    @IsNumber()
     freshmanYear: number
+    @IsString()
     major: string
+    @IsString()
     profileImageUrl: string
 
     static fromUserProfile({
