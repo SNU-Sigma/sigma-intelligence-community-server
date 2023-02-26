@@ -15,6 +15,7 @@ import { ConfigService } from './config/config.service'
 import { ImagesModule } from './images/images.module'
 import { PostsModule } from './posts/posts.module'
 import { PrinterReservationModule } from './printer-reservation/printer-reservation.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
     imports: [
@@ -81,6 +82,7 @@ import { PrinterReservationModule } from './printer-reservation/printer-reservat
         PrinterReservationModule,
         AdministratorModule,
         PostsModule,
+        UsersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
