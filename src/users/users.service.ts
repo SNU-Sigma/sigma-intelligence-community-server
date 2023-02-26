@@ -3,6 +3,7 @@ import { User } from '@prisma/client'
 import { PrismaService } from 'nestjs-prisma'
 import { UserProfileDto } from '../common/dto/user-profile.dto'
 import { UserDto } from '../common/dto/user.dto'
+import { UpdateUserProfileDto } from './dto/update-user-profile.dto'
 
 @Injectable()
 export class UsersService {
@@ -20,5 +21,26 @@ export class UsersService {
             ...user,
             profile: UserProfileDto.fromUserProfile(profile),
         }
+    }
+
+    async editMyProfile(
+        user: User,
+        { freshmanYear, profileImageUrl, major }: UpdateUserProfileDto,
+    ): Promise<UserDto> {
+        return this.prisma.user
+            .update({
+                where: { id: user.id },
+                data: {
+                    profile: {
+                        update: {
+                            freshmanYear,
+                            profileImageUrl,
+                            major,
+                        },
+                    },
+                },
+                include: { profile: true },
+            })
+            .then(UserDto.fromUserIncludeProfile)
     }
 }
