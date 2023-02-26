@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { PrismaService } from 'nestjs-prisma'
+import { UserProfileDto } from '../common/dto/user-profile.dto'
 import { UserDto } from '../common/dto/user.dto'
 
 @Injectable()
@@ -17,7 +18,7 @@ export class UsersService {
         }
         return {
             ...user,
-            profile,
+            profile: UserProfileDto.fromUserProfile(profile),
         }
     }
 }

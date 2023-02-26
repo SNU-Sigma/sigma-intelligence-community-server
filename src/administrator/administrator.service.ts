@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'nestjs-prisma'
 import { UserStatisticDto } from 'src/common/dto/user.dto'
+import { UserProfileDto } from '../common/dto/user-profile.dto'
 
 @Injectable()
 export class AdministratorService {
@@ -26,7 +27,7 @@ export class AdministratorService {
                 role: userStat.role,
                 userAuthId: userStat.userAuthId,
                 profileId: userStat.profileId,
-                profile: userStat.profile,
+                profile: UserProfileDto.fromUserProfile(userStat.profile),
                 reservationCount: userStat._count.reservations,
                 postCount: userStat._count.posts,
             }

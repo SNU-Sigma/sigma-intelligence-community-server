@@ -10,6 +10,7 @@ import {
     ListedPrinterReservationDto,
     PrinterReservationDto,
 } from '../common/dto/printer-reservation.dto'
+import { UserDto } from '../common/dto/user.dto'
 import { CreateReservationDto } from './dto/create-reservation.dto'
 
 @Injectable()
@@ -77,7 +78,10 @@ export class PrinterReservationService {
             include: printerReservationIncludeArgs,
         })
 
-        return reservation
+        return {
+            ...reservation,
+            user: UserDto.fromUserIncludeProfile(reservation.user),
+        }
     }
 
     async getReservationsByPrinterId(
@@ -112,6 +116,7 @@ export class PrinterReservationService {
         return reservations.map((reservation) => {
             return {
                 ...reservation,
+                user: UserDto.fromUserIncludeProfile(reservation.user),
                 isMine: user.id === reservation.userId,
             }
         })
@@ -132,18 +137,14 @@ export class PrinterReservationService {
     async deleteReservationById(
         reservationId: number,
         userId: User['id'],
-    ): Promise<PrinterReservationDto> {
+    ): Promise<void> {
         await this.checkOwnershipOfReservation(reservationId, userId)
-        const reservationToDelete = await this.prisma.printerReservation.delete(
-            {
-                where: {
-                    id: reservationId,
-                },
-                include: printerReservationIncludeArgs,
+        await this.prisma.printerReservation.delete({
+            where: {
+                id: reservationId,
             },
-        )
-
-        return reservationToDelete
+            include: printerReservationIncludeArgs,
+        })
     }
 
     async getMyReservations(
@@ -153,7 +154,10 @@ export class PrinterReservationService {
             where: { userId },
             include: printerReservationIncludeArgs,
         })
-        return reservations
+        return reservations.map(({ user, ...rest }) => ({
+            ...rest,
+            user: UserDto.fromUserIncludeProfile(user),
+        }))
     }
 }
 

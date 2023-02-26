@@ -49,11 +49,11 @@ export class PrinterReservationController {
     }
 
     @Delete('/reservations/:reservationId')
-    deleteReservationById(
+    async deleteReservationById(
         @Param('reservationId', ParseIntPipe) reservationId: number,
         @ExtractUser() user: User,
-    ): Promise<PrinterReservationDto> {
-        return this.printerReservationService.deleteReservationById(
+    ): Promise<void> {
+        await this.printerReservationService.deleteReservationById(
             reservationId,
             user.id,
         )

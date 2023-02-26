@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common'
 import { User } from '@prisma/client'
 import { PrismaService } from 'nestjs-prisma'
+import { UserDto } from '../common/dto/user.dto'
 import { CreatePostDto } from './dto/create-post.dto'
 import { PostDto, PostFeedDto } from './dto/post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
@@ -23,6 +24,7 @@ export class PostsService {
         return allPosts.map((postDto) => {
             return {
                 ...postDto,
+                user: UserDto.fromUserIncludeProfile(postDto.user),
                 isMyPost: postDto.userId === user.id,
             }
         })

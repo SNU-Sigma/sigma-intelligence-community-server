@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Role, User } from '@prisma/client'
+import { Role } from '@prisma/client'
+import { UserIncludeProfile } from '../models/UserIncludeProfile'
 import { UserProfileDto } from './user-profile.dto'
 
-export class UserDto implements User {
+export class UserDto implements UserIncludeProfile {
     id: number
     email: string
     @ApiProperty({ enum: Role })
@@ -11,6 +12,16 @@ export class UserDto implements User {
     profileId: number
 
     profile: UserProfileDto
+
+    static fromUserIncludeProfile({
+        profile,
+        ...rest
+    }: UserIncludeProfile): UserDto {
+        return {
+            ...rest,
+            profile: UserProfileDto.fromUserProfile(profile),
+        }
+    }
 }
 
 export class UserStatisticDto extends UserDto {
