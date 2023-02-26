@@ -5,6 +5,7 @@ import { UserProfileDto } from './user-profile.dto'
 export class UserDto implements User {
     id: number
     email: string
+    @ApiProperty({ enum: Role })
     role: Role
     userAuthId: number
     profileId: number
@@ -12,14 +13,6 @@ export class UserDto implements User {
     profile: UserProfileDto
 }
 
-export class UserStatisticDto implements User {
-    id: number
-    email: string
-    @ApiProperty({ enum: Role })
-    role: Role
-    userAuthId: number
-    profileId: number
-
-    profile: UserProfileDto
+export class UserStatisticDto extends UserDto {
     reservationCount: number
 }
