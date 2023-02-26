@@ -15,4 +15,5 @@ export class UserDto implements User {
 
 export class UserStatisticDto extends UserDto {
     reservationCount: number
+    postCount: number
 }

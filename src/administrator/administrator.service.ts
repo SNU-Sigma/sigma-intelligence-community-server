@@ -14,6 +14,7 @@ export class AdministratorService {
                     _count: {
                         select: {
                             reservations: true,
+                            posts: true,
                         },
                     },
                 },
@@ -27,6 +28,7 @@ export class AdministratorService {
                 profileId: userStat.profileId,
                 profile: userStat.profile,
                 reservationCount: userStat._count.reservations,
+                postCount: userStat._count.posts,
             }
         })
 
