@@ -16,7 +16,9 @@ export class UserProfileDto implements UserProfile {
         return {
             ...rest,
             freshmanYear: freshmanYear ?? 0,
-            profileImageUrl: profileImageUrl ?? '',
+            profileImageUrl:
+                profileImageUrl ??
+                'https://storage.sigma-intelligence.com/blank-profile.svg',
             major: major ?? '',
         }
     }
