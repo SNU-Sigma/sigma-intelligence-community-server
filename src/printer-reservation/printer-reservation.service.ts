@@ -117,7 +117,7 @@ export class PrinterReservationService {
         })
     }
 
-    async checkOwnershipOfReservation(
+    private async checkOwnershipOfReservation(
         reservationId: number,
         userId: User['id'],
     ) {
@@ -144,6 +144,16 @@ export class PrinterReservationService {
         )
 
         return reservationToDelete
+    }
+
+    async getMyReservations(
+        userId: User['id'],
+    ): Promise<Array<PrinterReservationDto>> {
+        const reservations = await this.prisma.printerReservation.findMany({
+            where: { userId },
+            include: printerReservationIncludeArgs,
+        })
+        return reservations
     }
 }
 

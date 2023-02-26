@@ -58,4 +58,11 @@ export class PrinterReservationController {
             user.id,
         )
     }
+
+    @Get('/my-reservations')
+    getMyReservations(
+        @ExtractUser() user: User,
+    ): Promise<Array<PrinterReservationDto>> {
+        return this.printerReservationService.getMyReservations(user.id)
+    }
 }
